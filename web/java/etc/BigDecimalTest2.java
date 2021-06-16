@@ -1,0 +1,19 @@
+/*
+두 개의 실수를 입력받아 두 실수의 차를 절대값으로 계산하여 출력 : 단, 오차가 존재하면 안됨
+*/
+import java.util.*;
+import java.math.*;
+
+class BigDecimalTest2 {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("실수1 입력 : ");		String num1 = sc.nextLine();
+		System.out.print("실수2 입력 : ");		String num2 = sc.nextLine();
+
+		BigDecimal n1 = new BigDecimal(num1);
+		BigDecimal n2 = new BigDecimal(num2);
+
+		BigDecimal result = n1.subtract(n2);
+		System.out.println("두 실수의 차 : " + result.abs());
+	}
+}

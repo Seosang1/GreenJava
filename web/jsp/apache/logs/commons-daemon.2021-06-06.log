@@ -1,0 +1,38 @@
+[2021-06-06 12:36:17] [info]  [11464] Apache Commons Daemon procrun (1.2.4.0 64-bit) started.
+[2021-06-06 12:36:17] [info]  [11464] Installing service 'Tomcat8' name 'Apache Tomcat 8.5 Tomcat8'.
+[2021-06-06 12:36:17] [info]  [11464] Service 'Tomcat8' installed.
+[2021-06-06 12:36:17] [info]  [11464] Apache Commons Daemon procrun finished.
+[2021-06-06 12:36:18] [info]  [ 6552] Apache Commons Daemon procrun (1.2.4.0 64-bit) started.
+[2021-06-06 12:36:18] [info]  [ 6552] Updating service...
+[2021-06-06 12:36:18] [info]  [ 6552] Updated service 'Tomcat8'.
+[2021-06-06 12:36:18] [info]  [ 6552] Finished updating service 'Tomcat8'.
+[2021-06-06 12:36:18] [info]  [ 6552] Apache Commons Daemon procrun finished.
+[2021-06-06 12:36:18] [info]  [ 3028] Apache Commons Daemon procrun (1.2.4.0 64-bit) started.
+[2021-06-06 12:36:18] [info]  [ 3028] Updating service...
+[2021-06-06 12:36:18] [info]  [ 3028] Updated service 'Tomcat8'.
+[2021-06-06 12:36:18] [info]  [ 3028] Finished updating service 'Tomcat8'.
+[2021-06-06 12:36:18] [info]  [ 3028] Apache Commons Daemon procrun finished.
+[2021-06-06 12:36:18] [info]  [ 3464] Apache Commons Daemon procrun (1.2.4.0 64-bit) started.
+[2021-06-06 12:36:18] [info]  [ 3464] Updating service...
+[2021-06-06 12:36:18] [info]  [ 3464] Updated service 'Tomcat8'.
+[2021-06-06 12:36:18] [info]  [ 3464] Finished updating service 'Tomcat8'.
+[2021-06-06 12:36:18] [info]  [ 3464] Apache Commons Daemon procrun finished.
+[2021-06-06 12:36:18] [info]  [ 5636] Apache Commons Daemon procrun (1.2.4.0 64-bit) started.
+[2021-06-06 12:36:18] [info]  [ 5636] Updating service...
+[2021-06-06 12:36:18] [info]  [ 5636] Updated service 'Tomcat8'.
+[2021-06-06 12:36:18] [info]  [ 5636] Finished updating service 'Tomcat8'.
+[2021-06-06 12:36:18] [info]  [ 5636] Apache Commons Daemon procrun finished.
+[2021-06-06 12:37:26] [info]  [ 8376] Apache Commons Daemon procrun (1.2.4.0 64-bit) started.
+[2021-06-06 12:37:26] [info]  [ 8376] Debugging 'Tomcat8' service...
+[2021-06-06 12:37:26] [info]  [ 8376] Starting service...
+[2021-06-06 12:37:27] [info]  [ 8376] Service started in 1137 milliseconds.
+[2021-06-06 12:37:34] [info]  [11732] Console CTRL+CLOSE event signaled.
+[2021-06-06 12:37:34] [info]  [11732] Stopping service...
+[2021-06-06 12:37:35] [info]  [11732] Service stop thread completed.
+[2021-06-06 12:37:41] [info]  [ 7972] Apache Commons Daemon procrun (1.2.4.0 64-bit) started.
+[2021-06-06 12:37:41] [info]  [ 7972] Debugging 'Tomcat8' service...
+[2021-06-06 12:37:41] [info]  [ 7972] Starting service...
+[2021-06-06 12:37:42] [info]  [ 7972] Service started in 1124 milliseconds.
+[2021-06-06 12:40:03] [info]  [ 9424] Console CTRL+CLOSE event signaled.
+[2021-06-06 12:40:03] [info]  [ 9424] Stopping service...
+[2021-06-06 12:40:04] [info]  [ 9424] Service stop thread completed.

@@ -1,0 +1,108 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	body {
+		margin:0; font-size:16px; line-height:1.5; background:rgb(240, 240, 240); 
+		color:#000; min-width:960px; padding-top:240px;
+		} 
+	h1, h2, h3, p, ul {margin:0;}
+	ul {padding-left:0;}
+	ul li {list-style-type:none;}
+	a {color:inherit; text-decoration:none;}
+	img {vertical-align:middle; }
+	.dummy {margin:0 auto; max-width:32em; padding:6em 0;}
+
+	.page-header {
+		background:#fff; position:absolute; width:100%; min-width:960px;
+		-webkit-box-shadow:0 1px 1px rgba(0, 0, 0, 0.25);
+				box-shadow:0 1px 1px rgba(0, 0, 0, 0.25);
+	} 
+	.page-header > .inner {margin:auto; width:960px;}
+	.no-boxshadow .page-header {border-bottom:1px solid rgb(204, 204, 204); } 
+	.site-logo { float:left; margin-left:-20px; }
+
+	.clearfix:before, .clearfix:after{content:""; display:table; }
+	.clearfix:after {clear:both;}
+	.primary-nav {float:right; line-height:65px; letter-spacing:1px; text-transform:uppercase;}
+	.primary-nav li {float:left;}
+	.primary-nav a {display:block; padding:0 1.36em; }
+	.primary-nav a:hover {background:rgb(240, 240, 240); }
+
+	.page-header-clone {
+		background:#000, opacity:0.9; position:fixed; top:-35px; width:100%;
+		-webkit-box-shadow:0 1px 1px rgba(0, 0, 0, 0.25);
+				box-shadow:0 1px 1px rgba(0, 0, 0, 0.25);
+		-webkit-transition:top 0.25s;
+				transition:top 0.25s;
+	}
+	.page-header-clone > .inner {margin:auto; width:960px;}
+	.page-header-clone.visible {top:0;}
+	.page-header-clone:hover {opacity:1;}
+	.page-header-clone.site-logo{margin-left:8px;}
+	.page-header-clone.site-logo a {display:block; width:143px; height:32px; overflow:hidden;}
+	.page-header-clone.site-logo a:before{
+		content:url("images/logo-small.png"); display:inline-block;
+	}
+	.page-header-clone .primary-nav {font-size:14px; line-height:35px;}
+	.page-header-clone .primary-nav a { color:rgb(128, 128, 128); }
+	</style>
+
+	<script src="jquery-3.6.0.js"></script>
+	<script>
+	$(document).ready(function() {
+		$(".page-header").each(function() {
+			var $window = $(window);		// 브라우저 창을 제이쿼리 객체로 저장	
+			var $header = $(this);			// page-header를 제이쿼리 객체로 저장(고정시켜야할 객체)
+			var $headerClone = $header.contents().clone();
+			// $header의 내용(contents())을 복제(clone())하여 $headerClone에 저장
+			var $headerCloneContainer = $("<div class='page-header-clone'></div>");
+			// 헤더 복제의 컨테이너 생성 - page-header-clone 클래스로 지정
+			var threshold = $header.offset().top + $header.outerHeight();
+			// 헤더의 최상위 위치 + 헤더의 높이
+			
+			$headerCloneContainer.append($headerClone);
+			// $headerCloneContainer에 $headerClone을 추가
+			// 즉, $headerCloneContainer에 div에 $headerClone을 삽입하는 개념
+			$headerCloneContainer.appendTo("body");
+			// $headerCloneContainer를 바디 요소 안에 삽입
+		
+			$window.on("scroll", function () {
+				if ($window.scrollTop() > threshold){
+				// 스크롤바의 위치가 메뉴바보다 아래에 있으면)
+					$headerCloneContainer.addClass("visible");
+				} else { 
+					$headerCloneContainer.removeClass("visible");
+				}
+			});
+		});		
+	});
+
+	</script>
+</head>
+<body>
+<div class="page-header">
+	<div class="inner clearfix">
+		<h1 class="site-logo"><a href="#"><img src="images/logo.png" width="200" height="65" />
+		</a></h1>
+		<div class="primary-nav">
+			<ul>
+				<li><a href="#">About</a></li>
+				<li><a href="#">Work</a></li>
+				<li><a href="#">Blog</a></li>
+				<li><a href="#">Recruit</a></li>
+				<li><a href="#">Contact</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="dummy">
+<p>Lorem ipsum Enim do velit exercitation fugiat cillum labore et dolore ad minim dolor amet tempor nisi sunt Excepteur voluptate laborum et Duis labore cupidatat officia laboris minim cupidatat sit ad incididunt dolor in nulla elit sint do sit aliqua eu ut irure commodo exercitation dolore consequat est laborum Duis in dolore esse est dolore voluptate amet fugiat cupidatat Duis proident consequat nostrud Excepteur ea minim nisi eiusmod sed amet irure id ut officia occaecat nisi elit velit qui aliquip adipisicing consequat adipisicing aute laboris do consectetur sit officia elit in tempor aute eiusmod nulla dolore non sint in fugiat adipisicing amet quis in velit sit sunt Duis culpa deserunt Duis sed elit veniam exercitation Ut pariatur magna et id esse dolor dolore aliquip et in cillum commodo commodo et quis veniam magna irure laborum commodo enim tempor dolore velit ut adipisicing consequat dolore enim sunt eiusmod irure aliquip Duis magna laboris non in aliquip magna dolor dolore nulla nisi proident cupid
+<p>Lorem ipsum Enim do velit exercitation fugiat cillum labore et dolore ad minim dolor amet tempor nisi sunt Excepteur voluptate laborum et Duis labore cupidatat officia laboris minim cupidatat sit ad incididunt dolor in nulla elit sint do sit aliqua eu ut irure commodo exercitation dolore consequat est laborum Duis in dolore esse est dolore voluptate amet fugiat cupidatat Duis proident consequat nostrud Excepteur ea minim nisi eiusmod sed amet irure id ut officia occaecat nisi elit velit qui aliquip adipisicing consequat adipisicing aute laboris do consectetur sit officia elit in tempor aute eiusmod nulla dolore non sint in fugiat adipisicing amet quis in velit sit sunt Duis culpa deserunt Duis sed elit veniam exercitation Ut pariatur magna et id esse dolor dolore aliquip et in cillum commodo commodo et quis veniam magna irure laborum commodo enim tempor dolore velit ut adipisicing consequat dolore enim sunt eiusmod irure aliquip Duis magna laboris non in aliquip magna dolor dolore nulla nisi proident cupid
+<p>Lorem ipsum Enim do velit exercitation fugiat cillum labore et dolore ad minim dolor amet tempor nisi sunt Excepteur voluptate laborum et Duis labore cupidatat officia laboris minim cupidatat sit ad incididunt dolor in nulla elit sint do sit aliqua eu ut irure commodo exercitation dolore consequat est laborum Duis in dolore esse est dolore voluptate amet fugiat cupidatat Duis proident consequat nostrud Excepteur ea minim nisi eiusmod sed amet irure id ut officia occaecat nisi elit velit qui aliquip adipisicing consequat adipisicing aute laboris do consectetur sit officia elit in tempor aute eiusmod nulla dolore non sint in fugiat adipisicing amet quis in velit sit sunt Duis culpa deserunt Duis sed elit veniam exercitation Ut pariatur magna et id esse dolor dolore aliquip et in cillum commodo commodo et quis veniam magna irure laborum commodo enim tempor dolore velit ut adipisicing consequat dolore enim sunt eiusmod irure aliquip Duis magna laboris non in aliquip magna dolor dolore nulla nisi proident cupid
+<p>Lorem ipsum Enim do velit exercitation fugiat cillum labore et dolore ad minim dolor amet tempor nisi sunt Excepteur voluptate laborum et Duis labore cupidatat officia laboris minim cupidatat sit ad incididunt dolor in nulla elit sint do sit aliqua eu ut irure commodo exercitation dolore consequat est laborum Duis in dolore esse est dolore voluptate amet fugiat cupidatat Duis proident consequat nostrud Excepteur ea minim nisi eiusmod sed amet irure id ut officia occaecat nisi elit velit qui aliquip adipisicing consequat adipisicing aute laboris do consectetur sit officia elit in tempor aute eiusmod nulla dolore non sint in fugiat adipisicing amet quis in velit sit sunt Duis culpa deserunt Duis sed elit veniam exercitation Ut pariatur magna et id esse dolor dolore aliquip et in cillum commodo commodo et quis veniam magna irure laborum commodo enim tempor dolore velit ut adipisicing consequat dolore enim sunt eiusmod irure aliquip Duis magna laboris non in aliquip magna dolor dolore nulla nisi proident cupid
+<p>Lorem ipsum Enim do velit exercitation fugiat cillum labore et dolore ad minim dolor amet tempor nisi sunt Excepteur voluptate laborum et Duis labore cupidatat officia laboris minim cupidatat sit ad incididunt dolor in nulla elit sint do sit aliqua eu ut irure commodo exercitation dolore consequat est laborum Duis in dolore esse est dolore voluptate amet fugiat cupidatat Duis proident consequat nostrud Excepteur ea minim nisi eiusmod sed amet irure id ut officia occaecat nisi elit velit qui aliquip adipisicing consequat adipisicing aute laboris do consectetur sit officia elit in tempor aute eiusmod nulla dolore non sint in fugiat adipisicing amet quis in velit sit sunt Duis culpa deserunt Duis sed elit veniam exercitation Ut pariatur magna et id esse dolor dolore aliquip et in cillum commodo commodo et quis veniam magna irure laborum commodo enim tempor dolore velit ut adipisicing consequat dolore enim sunt eiusmod irure aliquip Duis magna laboris non in aliquip magna dolor dolore nulla nisi proident cupid
+<p>Lorem ipsum Enim do velit exercitation fugiat cillum labore et dolore ad minim dolor amet tempor nisi sunt Excepteur voluptate laborum et Duis labore cupidatat officia laboris minim cupidatat sit ad incididunt dolor in nulla elit sint do sit aliqua eu ut irure commodo exercitation dolore consequat est laborum Duis in dolore esse est dolore voluptate amet fugiat cupidatat Duis proident consequat nostrud Excepteur ea minim nisi eiusmod sed amet irure id ut officia occaecat nisi elit velit qui aliquip adipisicing consequat adipisicing aute laboris do consectetur sit officia elit in tempor aute eiusmod nulla dolore non sint in fugiat adipisicing amet quis in velit sit sunt Duis culpa deserunt Duis sed elit veniam exercitation Ut pariatur magna et id esse dolor dolore aliquip et in cillum commodo commodo et quis veniam magna irure laborum commodo enim tempor dolore velit ut adipisicing consequat dolore enim sunt eiusmod irure aliquip Duis magna laboris non in aliquip magna dolor dolore nulla nisi proident cupid
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+	<style>
+	body { margin:0; }
+	.slideshow {
+		height:600px; min-width:960px; overflow:hidden; position:relative; 
+		margin-top:50px;
+	}
+	.slideshow-slides { height:100%; position:absolute; width:100%; }
+	.slideshow-slides .slide {
+		height:100%; width:100%; overflow:hidden; position:absolute; 
+	}
+	.slideshow-slides .slide img {
+		left:50%; margin-left:-500px; position:absolute; 
+	}
+	.slideshow-nav a, .slideshow-indicator a {
+		background:rgba(0, 0, 0, 0); overflow:hidden;
+	}
+	.slideshow-nav a:before, .slideshow-indicator a:before {
+		content:url("images/sprites.png"); display:inline-block; font-size:0; 
+		line-height:0;
+	}
+	.slideshow-nav a {
+		position:absolute; top:50%; left:50%; width:72px; height:72px; 
+		margin-top:-36px;
+	}
+	.slideshow-nav a.prev { margin-left:-480px; }
+	.slideshow-nav a.prev:before { margin-top:-20px; }
+	.slideshow-nav a.next { margin-left:408px; }
+	.slideshow-nav a.next:before { margin:-20px 0 0 -80px; }
+	.slideshow-nav a.disabled { display:none; }
+
+	.slideshow-indicator {
+		bottom:30px; height:16px; left:0; position:absolute; right:0; 
+		text-align:center;
+	}
+	.slideshow-indicator a {
+		display:inline-block; width:16px; height:16px; margin:0 3px; 
+	}
+	.slideshow-indicator a.active { cursor:default; }
+	.slideshow-indicator a:before { margin-left:-110px; }
+	.slideshow-indicator a.active:before { margin-left:-130px; }
+
+
+
+
+			/* 메뉴바 CSS 시작 */
+	h1, h2, h3, p, ul {margin:0;}
+	ul {padding-left:0;}
+	ul li {list-style-type:none; }
+	a {color:inherit; text-decoration:none;}
+	img {vertical-align:middle; }
+	#menuLine {width:1000px; padding-bottom:0; margin-top:5px;}
+	#sub {text-align:center; font-size:25px; color:#5f5f5f; margin:30px 0 10px 
+	0;}
+	.page-header {
+		position:absolute; width:100%; min-width:1100px;
+	}
+	.page-header.sticky {position:fixed; top:0;}
+	.page-header > .inner {margin:auto; width:960px;}
+
+	.primary-nav {
+		float:right; line-height:35px; letter-spacing:3px; width:100%; 
+		margin-top:5px;
+	}
+	.primary-nav li {float:left; font-size:16px; color:black;}
+	.primary-nav a {display:block; padding:0 1.36em; }
+	.primary-nav a:hover {background:rgb(240, 240, 240); }
+
+				/* 이미지박스 CSS 시작 */
+	
+	#imgDiv {
+		position:relative; width:1000px; padding-top:10px; margin:-130 auto;
+		}
+	#imgDiv .imgBox {
+			position:absolute; min-width:300px; height:200px; border:3px double 
+			black; line-height:200px;
+			
+		}
+	 #imgDiv #img1 {margin-left:10px;}
+	 #imgDiv #img2 {margin-left:340px; }
+	 #imgDiv #img3 {margin-left:675px;  }
+	 #imgDiv #img4 {margin:250 0 0 10px;}
+	 #imgDiv #img5 {margin:250 0 0 340px;}
+	 #imgDiv #img6 {margin:250 0 0 675px;}
+	 #imgDiv #img7 {margin:500 0 0 10px;}
+	 #imgDiv #img8 {margin:500 0 0 340px;}
+	 #imgDiv #img9 {margin:500 0 0 675px;}

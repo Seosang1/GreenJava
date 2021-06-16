@@ -1,0 +1,138 @@
+<html>
+<head>
+	<title>Document</title>
+	<style>
+	/* 사이트 공용 스타일 지정 */
+	body{margin:0; background:url("images/bg_body.gif") repeat-x;}
+	a:link {color:#4f4f4f; text-decoration:none;}
+	a:visited {color:#4f4f4f; text-decoration:none;}
+	a:hover {color:#f00; text-decoration:underline;}
+	a:active {color:#f00; text-decoration:none;}
+	a:focus {color:#f00; text-decoration:underline;}
+	th, td{
+		font-family:"돋움","굴림","sans-serif";
+		font-size:12px; color:#000; line-height:1.2; 
+		}
+	
+	.hand{cursor:pointer;} /* 해당 요소에 마우스를 손모양으로 변경*/
+	#subMenu1 {margin-left:240px;}
+
+	#uid, #pwd {width:95px; height:18px; border:1px solid #b4b4b4;}
+	</style>
+</head> 
+<body>
+<table width="886" align="center" cellpadding="0" cellspacing="0" border="0" style="background:url('images/wrap_bg.jpg') no-repeat;">
+	<tr><td valign="top"> 
+	<!-- 메뉴 영역 시작 -->
+	<table width="100%" cellpadding="0" cellspacing="0" border="0"							style="background:url('images/bg_menubox.png');" height="105">
+	<tr height="30"><td align="right" style="padding-right:30px;">
+		<a href="#">홈</a> : <a href="#">로그인</a> :  <a href="#">회원가입</a> : <a href="#"><a href="#">사이트맵</a> : <a href="#">ENGLISH</a>
+	</td></tr>
+	<tr height="43"><td align="center">
+		<table width="842" cellpadding="0" cellspacing="0" border="0"							style="background:url('images/sitemenu_bg.gif')no-repeat;">
+		<tr>
+		<td width="*" align="center"><img src="images/logo.gif" width="155" height="29" /></td>
+		<td width="124"><img src="images/topmenu01.gif" width="124" height="43" 
+		alt="HTML에 대해" class="hand" /></td>
+		<td width="108"><img src="images/topmenu02.gif" width="108" height="43" 
+		alt="CSS에 대해" class="hand"  /></td>
+		<td width="90"><img src="images/topmenu03.gif" width="90" height="43" 
+		alt="웹 표준" class="hand"  /></td>
+		<td width="101"><img src="images/topmenu04.gif" width="101" height="43" 
+		alt="웹 접근성" class="hand"  /></td>
+		<td width="109"><img src="images/topmenu05.gif" width="109" height="43" 
+		alt="묻고  답하기" class="hand"  /></td>
+		<td width="93"><img src="images/topmenu06.gif" width="93" height="43" 
+		alt="자료실" class="hand"  /></td>
+		</tr>
+		</table>
+	<tr><td>
+		<!-- 서브 메뉴 시작 -->
+		<div id="subMenu1">
+		<table width="230" cellpadding="0" cellspacing="0">
+		<tr>
+		<td><img src="images/bullet_list.gif" align="absmiddle"> <a href="#">(X)HTML 소개</a></td>
+		<td><img src="images/bullet_list.gif" align="absmiddle"> <a href="#">레퍼런스 소개</a></td>
+		<td><img src="images/bullet_list.gif" align="absmiddle"> <a href="#">활용예제</a></td>
+		</tr>
+		</table>
+		</div>
+		<!-- 서브 메뉴 종료 -->
+	</td></tr>
+	</table>
+	<!-- 메뉴 영역 종료 -->
+</td></tr>
+<tr><td valign="top"><img src="images/main_visual.gif" width="824" height="104" /></td></tr>
+</td></tr valign="top">
+
+<tr><td valign="top">
+	<!-- 컨텐츠 영역 시작 -->
+	<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:url('images/contents_box.png');">
+	<tr>
+	<td width="239" style="padding-top:30px;">
+		<!-- 좌측 컨텐츠 영역 시작 -->	
+		<table width="100%" cellpadding="0" cellspacing="0" border="0" >
+		<tr><td align="center">
+			<!-- 로그인 박스 영역 시작 -->
+			<form name="frmLogin" action="" method="post">
+			<table width="239" height="138" cellpadding="0" cellspacing="0" border="0"				 background="images/login_box.gif">
+			<tr height="35"><td colspan="3" style="padding-left:10px;">
+				<img src="images/h3_login.gif" width="44" height="18" alt="로그인">
+			</td></tr>
+			<tr>
+			<td width="50" style="padding-left:15px"><img src="images/title_id.gif"					width="30" height="12" alt="아이디" /></td>
+			<td width="*"><input type="text" name="uid" id="uid" /></td>
+			<td width="70" rowspan="2"><input type="image" width="50" height="45"					src="images/btn_login.gif" alt="로그인" /></td> 
+			</tr>
+			<tr>
+			<td width="50" style="padding-left:15px"><img src="images/title_pw.gif"					width="41" height="12" alt="비밀번호" /></td>
+			<td><input type="password" name="pwd" id="pwd" /></td>
+			</tr>
+			<tr><td colspan="3" align="center">
+				<hr width="85%" style="border:1px solid #d1d1d1;" />
+				<img src="images/icon_login.gif" /> <a href="#">회원가입</a>&nbsp;
+				<img src="images/icon_login.gif" /> <a href="#">아이디/비밀번호 찾기</a>
+			</td></tr>
+			<tr height="13"><td colspan="3"></td></tr>
+			</table>
+			</form>
+			<!-- 로그인 박스 영역 종료 -->
+	</td></tr>
+	<tr><td align="center">
+	<a href="#"><img src="images/btn_html.gif"></a>
+	<a href="#"><img src="images/btn_css.gif"></a>
+	</td></tr>
+			<!-- 웹 표준이란? 시작 -->
+
+			<!-- 웹 표준이란? 종료 -->
+	<tr><td align="center"></td></tr>
+	<tr><td align="center">
+		<!-- 용어 정의 영역 시작 -->
+		
+		<!-- 용어 정의 영역 종료 -->
+	</td></tr>
+	</table>
+	<!-- 좌측 컨텐츠 영역 종료 -->
+	</td>
+	<td width="239">
+	<!-- 중앙 컨텐츠 영역 시작 -->	
+	<!-- 중앙 컨텐츠 영역 종료 -->
+	</td>
+	<td width="239">
+	<!-- 우측 컨텐츠 영역 시작 -->	
+	<!-- 우측 컨텐츠 영역 종료 -->
+	</td>
+	</tr>
+	</table>
+	<!-- 컨텐츠 영역 종료 -->
+</td></tr>
+
+<tr><td valign="top">
+	<!-- 슬로건 영역 시작 -->
+
+	<!-- 슬로건 영역 종료 -->
+</td></tr>
+
+</table>
+</body>
+</html>
