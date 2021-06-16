@@ -13,6 +13,8 @@ create view v_pdt_list as
 select * from v_pdt_list;
 select * from v_pdt_list  where 1=1  order by pi_name asc limit 0, 15;
 
+select * from t_product_info;
+
 create table t_admin_info (						
 	ai_idx	int	auto_increment unique,			-- 관리자 번호
 	ai_id	varchar(20)	primary key,			-- 관리자 아이디
