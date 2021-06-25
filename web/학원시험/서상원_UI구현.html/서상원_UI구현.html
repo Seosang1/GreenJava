@@ -1,0 +1,52 @@
+<html>
+<head>
+	<title>서상원</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<form action="" method="post">
+<fieldset class="info">
+	<legend> 납품자 정보</legend>
+	<ol type="1">
+	<li><label for="name"> 납품자명 : </label><input type="text" size="15"
+	placeholder="name" id="name"></li>
+	<li><label for="email"> 전자메일 : </label> <input type="email" size="15"
+	placeholder="test@naver.com" id="email"></li>
+	<li><label for="url"> 홈페이지 : </label> <input type="url" size="15"
+	placeholder="http://" id="url"></li>
+	</ol>
+</fieldset>
+<fieldset class="data">
+	<legend>납품 정보</legend>
+	<ul type="disc">
+	<li><label for="itemname"> 상품이름 : </label>
+	<input type="text" size="15" list="shoes" id="itemname">
+		<datalist id="shoes">
+		<option value="pdt10001">런닝화</option>
+		<option value="pdt10002">농구화</option>
+		<option value="pdt10003">족구화</option></li>
+	<li><label for="count"> 납품수량 : </label><input type="text" size="15"
+	placeholder="최소10" id="count"></li>
+	<li><label for="quality"> 납품등급 : </label><input type="range" 
+	min="0" max="10" step="2" size="15" id="quality"></li>
+	<li><label for="location"> 납품지역 : </label>
+			<select multiple="multiple" size="5" id="location">
+		<optgroup label="서울지역">
+			<option value="gangnam">강남구</option>
+			<option value="seodaemun">서대문구</option>
+			<option value="mapo">마포구</option>
+		</optgroup>
+		<optgroup label="경기지역">
+				<option value="suwon">수원</option>
+				<option value="goyang">고양</option>
+				<option value="hwaseong">화성</option>
+		</optgroup>
+			</select>
+	</li>
+	</ul>
+</fieldset><br />
+<input type="submit" id="submit" value="납품서 제출">&nbsp;&nbsp;&nbsp;
+<input type="reset" id="reset" value="다시 작성">
+</form>
+</body>
+</html>
