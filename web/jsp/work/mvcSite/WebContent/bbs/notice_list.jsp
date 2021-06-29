@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="vo.*"%>
-<%
+<%   
 	ArrayList<NoticeInfo> articleList  = (ArrayList<NoticeInfo>)request.getAttribute("articleList");
 	// 화면에서 보여줄 게시글 목록을 ArrayList로 받아옴
 	// attribute에 들어있는 데이터들은 Object로 되어 있기 때문에 사용하려면 해당 자료형으로 형변환을 해야 함
@@ -30,6 +30,7 @@
 	}
 	
 	args = "&cpage=" + cpage + schargs;
+		 	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -65,7 +66,7 @@
 				idx = articleList.get(i).getBn_idx();
 				title = articleList.get(i).getBn_title();
 				date = articleList.get(i).getBn_date().substring(2, 11).replace("-", ".");
-				lnk = "<a href='brd_view.ntc?idx=" + idx + args + "&title=" + title + "'>";
+				lnk = "<a href='brd_view.ntc?idx'" + idx + args + " title='" + title + "'>";
 				if (title.length() > 28) title = title.substring(0, 26) + "...";
 				
 	%> 

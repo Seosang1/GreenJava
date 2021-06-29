@@ -1,18 +1,11 @@
 package ctrl;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import action.Action;
-import action.MemberProcAct;
-import action.MemberUpdateAct;
-import vo.ActionForward;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.annotation.*;
+import javax.servlet.http.*;
+import action.*;
+import vo.*;
 
 @WebServlet("*.pdt")
 public class ProductCtrl extends HttpServlet {	// 상품관련 기능들의 서블릿(컨트롤러)
@@ -34,6 +27,9 @@ public class ProductCtrl extends HttpServlet {	// 상품관련 기능들의 서블릿(컨트�
     	switch (command) {
     		case "/pdt_list.pdt" :	// 상품 목록 화면
     			action = new PdtListAct();
+    			break;
+    		case "/pdt_view.pdt" :	// 상품 상세 화면
+    			action = new PdtViewAct();
     			break;
     	}
 

@@ -6,6 +6,7 @@ public class ProductInfo {
 	private String pi_img1, pi_img2, pi_img3, pi_desc, pi_isview, pi_date;
 	private int pi_cost, pi_price, pi_discount, pi_stock, pi_salecnt, pi_review, ai_idx;
 	private double pi_star;
+	private String cb_id, cb_name, cs_name, b_name;	// 조인해서 받아올 데이터들
 
 	public String getPi_id() {
 		return pi_id;
@@ -126,5 +127,29 @@ public class ProductInfo {
 	}
 	public void setPi_star(double pi_star) {
 		this.pi_star = pi_star;
+	}
+	public String getCb_id() {
+		return cb_id;
+	}
+	public void setCb_id(String cb_id) {
+		this.cb_id = cb_id;
+	}
+	public String getCb_name() {
+		return cb_name;
+	}
+	public void setCb_name(String cb_name) {
+		this.cb_name = cb_name;
+	}
+	public String getCs_name() {
+		return cs_name;
+	}
+	public void setCs_name(String cs_name) {
+		this.cs_name = cs_name;
+	}
+	public String getB_name() {
+		return b_name;
+	}
+	public void setB_name(String b_name) {
+		this.b_name = b_name;
 	}
 }
