@@ -1,0 +1,37 @@
+package dao;
+
+import static db.JdbcUtil.*;
+import java.sql.*; 
+import vo.*;
+
+public class LoginDao {
+// 로그인 관련 쿼리를 생성하여 실행시킴
+	private static LoginDao loginDao;
+	private Connection conn;
+	private LoginDao() {}
+	public static LoginDao getInstance() {
+		if (loginDao == null) {
+			loginDao = new LoginDao();
+		}
+		return loginDao;
+	}
+	public void setConnection(Connection conn) {
+		this.conn = conn;
+	}
+	public MemberInfo getLoginMember(String uid, String pwd) {
+		MemberInfo loginMember = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = conn.createStatement();
+			String 
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(stmt);
+		}
+		return loginMember;
+	}
+}

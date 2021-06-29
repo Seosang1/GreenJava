@@ -1,0 +1,23 @@
+1623131695368	Delete elements
+1623131745175	Rename resource 'notice_list.jsp'
+1623131765468	Rename resource 'notice_view.jsp'
+1623131909718	Rename type 'NoticeViewAction'
+1623131924776	Delete elements
+1623131930742	Delete elements
+1623131946724	Delete elements
+1623131977030	Delete elements
+1623132507481	Rename type 'NoticeViewSvc'
+1623132522425	Rename type 'NoticeListSvc'
+1623132555373	Rename type 'NoticeCtrl'
+1623132631396	Rename type 'NoticeDao'
+1623143190549	Rename resource 'notice_list.jsp'
+1623143204705	Rename resource 'notice_view.jsp'
+1623143232831	Rename type 'NoticeInfo'
+1623143915313	Delete element
+1623150014247	Rename type 'NoticeListAction'
+1623150037793	Rename type 'NoticeViewAction'
+1623150061748	Rename type 'NoticeCtrl'
+1623150244055	Rename type 'NoticeListSvc'
+1623150251059	Rename type 'NoticeViewSvc'
+1623155914400	Rename type 'NoticeDao'
+1623157914172	Delete element

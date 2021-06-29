@@ -1,0 +1,138 @@
+package dao;
+
+import static db.JdbcUtil.*;
+import javax.sql.*;
+import java.sql.*;
+import java.util.*;
+import vo.*;
+
+public class TestBrdDao { 
+	private static TestBrdDao testBrdDao; 
+	private Connection conn;
+	private TestBrdDao() {} 
+
+	public static TestBrdDao getInstance() {
+		if (testBrdDao == null)	testBrdDao = new TestBrdDao(); 
+		return testBrdDao;
+	}
+	public void setConnection(Connection conn) { 
+		this.conn = conn; 
+	}
+
+	public int getArticleCount(String where) { 
+		Statement stmt = null; 
+		ResultSet rs = null;	 
+		int rcnt = 0;	 
+
+		try {
+			String sql = "select count(*) from t_board" + where; 
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			if (rs.next())	rcnt = rs.getInt(1); 
+			
+		} catch(Exception e) {
+			System.out.println("getArticleCount() 메소드 오류");
+			e.printStackTrace();
+		} finally {
+			close(rs);	close(stmt);
+		}
+
+		return rcnt;
+	}
+	
+	public ArrayList<TestInfo> getArticleList(String where, int cpage, int psize) {
+	// 게시글의 목록을 ArrayList<NoticeInfo> 형으로 리턴하는 메소드
+		Statement stmt = null;
+		ResultSet rs = null;
+		ArrayList<TestInfo> articleList = new ArrayList<TestInfo>();
+		// 공지사항 게시글의 목록을 저장할 ArrayList 인스턴스
+		TestInfo noticeInfo = null;
+		// articleList에 담을 데이터인 NoticeInfo 형 인스턴스를 선언
+		int snum = (cpage - 1) * psize;
+		// 쿼리의 limit 명령에서 데이터를 가져올 시작 인덱스 번호
+
+		try {
+			String sql = "select * from t_board " + where + 
+				" order by bn_idx desc limit " + snum + ", " + psize;
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+			// rs에 보여줄 게시글이 있을 경우
+				noticeInfo = new TestInfo();
+				// articleList에 저장할 한 게시글의 정보를 담을 인스턴스 생성
+
+				noticeInfo.setBn_idx(rs.getInt("bn_idx"));
+				noticeInfo.setBn_title(rs.getString("bn_title"));
+				noticeInfo.setBn_content(rs.getString("bn_content"));
+				noticeInfo.setBn_read(rs.getInt("bn_read")); 
+				noticeInfo.setBn_date(rs.getString("bn_date"));
+				noticeInfo.setAi_idx(rs.getInt("ai_idx"));
+				// 받아온 레코드들로 게시글 정보를 저장
+				
+				articleList.add(noticeInfo);
+				// 한 게시글의 정보를 담은 noticeInfo 인스턴스를 articleList에 저장
+			}
+		} catch(Exception e) {
+			System.out.println("getArticleList() 메소드 오류");
+			e.printStackTrace();
+		} finally {
+			close(rs);	close(stmt);
+		}
+
+		return articleList;
+	}
+
+	public int readCountUp(int idx) {
+	// 특정 게시글의 조회수를 증가시키는 메소드
+		Statement stmt = null;
+		int result = 0;
+		
+		try {
+			String sql = "update t_board set bn_read = bn_read + 1 " +
+				" where bn_idx = " + idx;
+			stmt = conn.createStatement();
+			result = stmt.executeUpdate(sql);
+		} catch(Exception e) {
+			System.out.println("readCountUp() 메소드 오류");
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+		}
+		
+		return result;
+	}
+
+	public TestInfo getArticle(int idx) {
+	// 사용자가 선택한 게시글의 정보를 NoticeInfo 형 인스턴스로 리턴하는 메소드
+		Statement stmt = null;
+		ResultSet rs = null;
+		TestInfo article = null;
+		// 하나의 게시글 정보를 저장하여 리턴할 NoticeInfo 형 인스턴스를 선언
+
+		try {
+			String sql = "select * from t_board where bn_idx = " + idx;
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+			// rs에 보여줄 게시글이 있을 경우
+				article = new TestInfo();
+
+				article.setBn_idx(idx);
+				article.setBn_title(rs.getString("bn_title"));
+				article.setBn_content(rs.getString("bn_content"));
+				article.setBn_read(rs.getInt("bn_read"));
+				article.setBn_isnotice(rs.getString("bn_isnotice"));
+				article.setBn_date(rs.getString("bn_date"));
+				article.setAi_idx(rs.getInt("ai_idx"));
+				// 받아온 레코드로 게시글 정보를 저장
+			}
+		} catch(Exception e) {
+			System.out.println("getArticle() 메소드 오류");
+			e.printStackTrace();
+		} finally {
+			close(rs);	close(stmt);
+		}
+
+		return article;
+	}
+}

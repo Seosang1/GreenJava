@@ -1,0 +1,12 @@
+package action; 
+
+import javax.servlet.http.*;
+import java.util.*;
+import svc.*;
+import vo.*;
+
+public class TestProcAct implements Action { 
+	
+	
+
+}

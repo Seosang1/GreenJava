@@ -1,0 +1,21 @@
+package dao;
+
+
+
+public class MemberDao {
+	// 회원 관련 DB작업을 실제로 처리하는 메소드들을 담은 클래스
+		private static MemberDao noticeDao;
+		// NoticeDao 형 인스턴스를 하나만 생성케 하기 위해 static으로 선언
+		private Connection conn;
+		private MemberDao() {}
+		// 기본 생성자로 외부에서 함부로 생성하지 못하게 private으로 선언됨
+
+		public static MemberDao getInstance() {
+			if (noticeDao == null)	noticeDao = new MemberDao(); 
+			return noticeDao;
+		}
+		public void setConnection(Connection conn) { 
+			this.conn = conn; 
+		}
+
+}

@@ -1,0 +1,7 @@
+package vo;
+
+public class ActionForward {
+// 요청을 처리한 후 뷰페이지로 이동할 때 이동하는 방식(디스패치나 리다이렉트)을 지정해주는 클래스
+	private String path;
+	private boolean redirect;
+}

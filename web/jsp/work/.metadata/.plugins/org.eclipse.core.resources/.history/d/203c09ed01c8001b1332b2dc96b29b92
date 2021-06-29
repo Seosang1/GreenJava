@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Class-Path: 
+Import-Package: javax.servlet;version="[2.3.0,4.0.0)", javax.servlet.http;version="[2.3.0,4.0.0)"
+
+	

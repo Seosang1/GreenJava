@@ -1,0 +1,17 @@
+package action;
+
+import javax.servlet.http.*;
+import java.util.*;
+import svc.*;
+import vo.*;
+
+public class NoticeListAction implements Action {
+// 게시글 목록을 받아와 연결하는 클래스
+	ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ArrayList<NoticeInfo> articleList = new ArrayList();
+		// 공지사항 게시글의 목록을 저장할 ArrayList 인스턴스로 NoticeInfo형 인스턴스만 저장함
+
+		request.setCharacterEncoding("utf-8");
+		int cpage = 1, psize = 10;
+	}
+}

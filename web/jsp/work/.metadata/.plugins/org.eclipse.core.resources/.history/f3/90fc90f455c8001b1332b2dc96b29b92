@@ -1,0 +1,9 @@
+package vo;
+
+public class TestInfo {
+// 하나의 공지사항 게시물을 저장할 클래스
+	private int cpage, pcnt, spage, epage, rcnt, psize, bsize, bn_idx, bn_read, bn_reply ;
+	private String  bn_pwd, bn_writer, bn_title, bn_content, bn_date;
+	   
+	}
+}

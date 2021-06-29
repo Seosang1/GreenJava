@@ -1,0 +1,28 @@
+package ctrl;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*; 	// request, reponse, session 등의 객체를 사용하기 위함
+import svc.*;
+import vo.*;
+
+@WebServlet("/login")
+public class LoginCtrl extends HttpServlet {
+	private static final long serialVersionUID = 1L; 
+    public LoginCtrl() {
+        super(); 
+    } 
+    
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		// 사용자의 요청으로 받은 데이터들의 인코딩 방식을 유니코드로 지정
+		String uid = request.getParameter("uid");
+		String pwd = request.getParameter("pwd");
+		// 사용자가 보낸 값들이 들어있는 컨트롤(uid,pwd)들의 값을 각각 uid, pwd로 받음
+		
+		LoginSvc loginSvc = new loginSvc();
+		// 로그인에 필요한 작업을 위해 로그인 기능의 메소드를 가진 클래스의 인스턴스 생성
+	}
+
+}

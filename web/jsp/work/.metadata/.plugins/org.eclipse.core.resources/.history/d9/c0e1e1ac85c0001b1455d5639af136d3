@@ -1,0 +1,38 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.oreilly.servlet.MultipartRequest" %>
+<%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %>
+<%@ page import="java.util.*" %>
+<%
+
+request.setCharacterEncoding("utf-8"); 
+String saveDirectory = application.getRealPath("/upload"); //실제 경로
+out.println("saveDirectory => " + saveDirectory + "<br>");
+
+int maxPostSize = 5*1024*1024; //5MB
+
+MultipartRequest multi = new MultipartRequest(request, saveDirectory, maxPostSize, "EUC-KR", new DefaultFileRenamePolicy());
+
+String title = multi.getParameter("title");
+String user = multi.getParameter("user");
+out.println(title = " : " + user + "<br>");
+
+Enumeration enu = multi.getParameterNames();
+while(enu.hasMoreElements()){
+    String name = (String)enu.nextElement();
+    out.println(name + "=>" + multi.getParameter(name) + "<br>");
+}
+out.println("<hr>");
+
+//getFile() - File객체를 얻어 올 수 있다. File 객체를 맘대로 제어 가능.
+//getFileName() - 멀티 업로드가 기본적으로 가능하다.
+Enumeration enu2 = multi.getFileNames();
+
+while(enu2.hasMoreElements()){
+    String fileName = (String)enu2.nextElement();
+    out.println("fileName => " + fileName + "<br>");
+    out.println("실제 파일명 => " + multi.getOriginalFileName(fileName) + "<br>");
+    out.println("저장될 파일명 => " + multi.getFilesystemName(fileName) + "<br>");
+    out.println("파일 타입 => " + multi.getContentType(fileName) + "<br>");
+}
+
+%>

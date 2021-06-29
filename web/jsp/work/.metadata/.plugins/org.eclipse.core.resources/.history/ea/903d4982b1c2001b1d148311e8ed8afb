@@ -1,0 +1,86 @@
+package dao;
+
+import static db.JdbcUtil.*;
+import javax.sql.*;
+import java.sql.*;
+import java.util.*;
+import vo.*;
+
+public class NoticeDao {
+   // 공지사항 관련 db 작업을 실제로 처리하는 메소드들을 담은 클래스.
+      private static NoticeDao NoticeDao;
+      private Connection conn;      
+      private NoticeDao() {}
+      
+      public static NoticeDao getInstance() {
+         if (NoticeDao == null) {            NoticeDao = new NoticeDao();         }
+         return NoticeDao;
+      }
+      public void setConnection(Connection conn) {
+         this.conn = conn;
+      }
+      public int getArticleCount(String where) {
+         // 게시글의 총 개수를 리턴하는 메소드
+            Statement stmt = null;
+            ResultSet rs = null;
+            int rcnt = 0;
+            
+            try {
+               String sql = "select count(*) from t_brd_notice" + where;
+               stmt = conn.createStatement();
+               rs = stmt.executeQuery(sql);
+               
+               if(rs.next()) {
+                  rcnt = rs.getInt(1);
+                  //게시글의 개수를 rcnt에 저장 (게시글이 없으면 0이 저장됨)
+               }
+            }catch(Exception e){
+               System.out.println("getArticleCount() 메소드 오류");
+               e.printStackTrace();
+            }finally {
+               close(rs);   close(stmt);      
+            }
+            
+            return rcnt;
+      }
+      public ArrayList<NoticeInfo> getArticleList(String where, int cpage, int psize) {
+         // 게시글의 목록을 ArrayList<NoticeInfo>형으로 리턴하는 메소드
+         Statement stmt = null;
+         ResultSet rs = null;
+         ArrayList<NoticeInfo> articleList = new ArrayList<NoticeInfo>();
+         // 공지사항 게시글의 목록을 저장할 ArrayList 인스턴스
+         NoticeInfo noticeInfo = null;
+         //articleList에 담을 데이터인 NotiveInfo형 인스턴스를 선언
+         int snum = (cpage - 1) * psize;
+         // 쿼리의 limit 명령에서 데이터를 가져올 시작 인덱스 번호
+         
+         try {
+            String sql = "select * from t_brd_notice " + where + " order by bn_idx desc limit " + snum + ", " + psize ;
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+            	noticeInfo = new NoticeInfo();
+            	// ArticleList에 저장할 한 게시글의 정보를 담을 인스턴스 생성
+            	
+            	noticeInfo.setBn_idx(rs.getInt("bn_idx"));
+            	noticeInfo.setBn_title(rs.getString("bn_title"));
+            	noticeInfo.setBn_content(rs.getString("bn_content"));
+            	noticeInfo.setBn_read(rs.getInt("bn_read"));
+            	noticeInfo.setBn_isnotice(rs.getString("bn_isnotice"));
+            	noticeInfo.setBn_date(rs.getString("bn_date"));
+            	noticeInfo.setAi_idx(rs.getInt("ai_idx"));
+            	// 받아온 레코드들로 게시글 정보를 저장
+            	
+            	articleList.add(noticeInfo);
+            	// 한 게시글의 정보를 담은 noticeInfo 인스턴스를 articleList에 저장
+            }
+         }catch(Exception e){
+            System.out.println("getArticleList() 메소드 오류");
+            e.printStackTrace();
+         }finally {
+            close(rs);   close(stmt);      
+         }
+         
+         return articleList;
+      }
+}

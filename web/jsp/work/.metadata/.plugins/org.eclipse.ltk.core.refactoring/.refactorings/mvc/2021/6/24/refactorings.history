@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;action.NoticeListAction&apos; to &apos;TestListAct&apos;&#x0D;&#x0A;- Original project: &apos;mvc&apos;&#x0D;&#x0A;- Original element: &apos;action.NoticeListAction&apos;&#x0D;&#x0A;- Renamed element: &apos;action.TestListAct&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;NoticeListAction&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;action{NoticeListAction.java[NoticeListAction" matchStrategy="1" name="TestListAct" qualified="false" references="true" similarDeclarations="false" stamp="1623131521065" textual="false" version="1.0"/>
+</session>

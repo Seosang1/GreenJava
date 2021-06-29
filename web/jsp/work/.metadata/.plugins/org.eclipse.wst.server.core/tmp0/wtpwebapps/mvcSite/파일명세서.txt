@@ -1,0 +1,18 @@
+공지사항
+ - 정보 : NoticeInfo
+ - 컨트롤러 : NoticeCtrl - *.ntc
+ - 목록(brd_list.ntc) : notice_list.jsp, NoticeListAction, NoticeListSvc
+ - 보기(brd_view.ntc) : notice_view.jsp, NoticeViewAction, NoticeViewSvc
+ - 폼(brd_vorm.ntc) : notice_form.jsp, NoticeFormAction, NoticeFormSvc
+ - 처리(brd_proc.ntc) : NoticeProcAction, NoticeProcSvc
+ - DB : NoticeDao
+ - 사용자 요청 -> NoticeCtrl -> Notice~Action -> Notice~Svc -> Notice~Dao
+
+회원-회원가입, 정보수정, 회원탈퇴
+ - 정보 : MemberInfo
+ - 컨트롤러 : MemberCtrl - *.mem
+ - 가입(join_form.mem) : join_form.jsp, MemberJoinAct, MemberJoinSvc
+ - 수정(mypage.mem) :mypage.jsp, MemberUpdageAct, MemberUpdateSvc
+ - 탈퇴(mpDelete.mem) : mypage.jsp, MemberDeleteAct, MemberDeleteSvc
+ - 처리(proc.mem) : MemberProcAct, MemberProcSvc
+ - DB : MemberDao

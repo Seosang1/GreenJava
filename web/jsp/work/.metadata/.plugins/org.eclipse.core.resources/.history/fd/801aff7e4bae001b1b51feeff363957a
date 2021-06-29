@@ -1,0 +1,100 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%
+request.setCharacterEncoding("utf-8");	// request로 받아오는 데이터들의 캐릭터 인코딩을 유니코드로 지정
+String schYear = request.getParameter("schYear");
+String schMonth = request.getParameter("schMonth");
+// 처음 열린 경우 받아오는 값이 없으므로 schYear와 schMonth에는 각각 null값이 들어감
+
+Calendar today = Calendar.getInstance();
+int year = today.get(Calendar.YEAR);
+int month = today.get(Calendar.MONTH);
+
+int sYear = year, sMonth = month;	// 실제 달력을 구현할 때 사용할 연도와 월로 기본값은 현재 연도와 월
+if (schYear != null && schMonth != null) {	// 검색할 연도와 월이 있을 경우
+	sYear = Integer.parseInt(schYear);
+	sMonth = Integer.parseInt(schMonth);
+	// schYear와 schMonth의 값이 String이므로 int형으로 형변환한 후 넣어 줌
+	// 달력을 만들 날짜를 생성하기 위해 인수로 사용할 연도와 월을 int형으로 만들어야 함
+}
+int weekDay = 0;	// 1일의 요일번호를 저장할 변수 (1일의 출력 위치를 위한 변수)
+int endDay= 0;		// 해당 월의 말일을 저장할 변수(루프의 조건을 위해 필요)
+
+Calendar sdate = Calendar.getInstance();	// 달력의 시작일을 저장할 인스턴스
+Calendar edate = Calendar.getInstance();	// 달력의 종료일을 저장할 인스턴스
+
+sdate.set(year, sMonth, 1);		// 달력의 시작일 지정
+edate.set(year, sMonth + 1, 1);	// 달력의 종료일을 추출하기 위해 다음달 1일로 지정
+edate.add(Calendar.DATE, -1);	// 다음달 1일에서 1일을 뺀 날짜로 종료일을 지정
+
+
+weekDay = sdate.get(Calendar.DAY_OF_WEEK);	// 시작일의 요일 번호로 루프의 시작점으로 사용됨
+endDay = edate.get(Calendar.DATE);			// 말일로 루프의 종료점으로 사용됨
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<style>
+body { margin:0; }
+#wrapper { margin:0 auto; width:700px; text-align:center; } 
+.pdt, .pdt th, .pdt td {border:1px blue solid;}
+#col {border-collapse:collapse;}  
+.pdt td {height:60px;}
+</style>
+</head>
+<body>
+<div id="wrapper">
+	<h2>일정 관리 - <%=sYear %>년 <%=sMonth + 1 %>월</h2>
+	<form name="frm">
+	<input type="button" value="이전 달" />
+	<select name="schYear">
+<%
+String selected = "";
+for (int i = 1990 ; i <= year ; i++) {
+	selected = "";
+	if (i == year)	selected = " selected=\"selected\"";
+%>
+	<option value="<%=i%>"<%=selected%>><%=i%></option>
+<% } %>	</select>년
+	<select name="schMonth">
+<%
+for (int i = 0 ; i <= 11 ; i++) {
+	selected = "";
+	if (i == month)	selected = " selected=\"selected\"";
+%>
+	<option value="<%=i%>"<%=selected%>><%=i + 1%></option>
+<% } %>
+	</select>월
+	<input type="button" value="다음 달" />
+	</form>
+	<br /><br />
+	<table width="700" class="pdt" id="col">
+	<tr> 
+	<th width="100">일</th> <th width="100">월</th> <th width="100">화</th> <th width="100">수</th>
+	<th width="100">목</th> <th width="100">금</th> <th width="100">토</th>
+	</tr>
+<% 
+if (weekDay != 1) {	// 1일이 일요일이 아니면(1일의 시작위치가 처음이 아니면)
+	out.println("<tr>");
+	for (int i = 1 ; i < weekDay ; i++) out.println("<td></td>");
+}
+
+for (int i = 1, n = weekDay ; i <= endDay ; i++, n++) {
+// i : 날짜의 일(day)을 표현하기 위한 변수 / n : 일주일이 지날 때 마다 다음 줄로 내리기 위한 변수
+	if(n % 7 == 1) {	// 요일번호가 1이면
+		out.println("<tr>");
+	}
+	
+	out.println("<td>" + i + "</td>");
+
+	if(n % 7 == 0) {	// 요일번호가 7이면
+		out.println("</tr>");
+	}
+}
+%>
+	</table>
+</div>
+</body>
+</html>

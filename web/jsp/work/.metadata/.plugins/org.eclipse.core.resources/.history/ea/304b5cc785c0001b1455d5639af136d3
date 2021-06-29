@@ -1,0 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.oreilly.servlet.MultipartRequest" %>
+<%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %>
+<%@ page import="java.util.*" %>
+<%
+
+request.setCharacterEncoding("utf-8"); 
+
+String uploadPath = request.getRealPath("/upload");
+int maxSize = 5 * 1024 * 1024;	 
+String name = "", img = "";	
+String file1 = "", file2 = "", file3 = "";	
+String img_old = "", file1_old = "", file2_old = "", file3_old;  	
+
+request.setCharacterEncoding("utf-8"); 
+
+try {
+	MultipartRequest multi = new MultipartRequest(
+		request, 	 
+		uploadPath, 
+		maxSize, 	 
+		"utf-8", 	 
+		new DefaultFileRenamePolicy());	 
+
+	Enumeration files = multi.getFileNames();
+	
+	String img = (String)files.nextElement();
+	file1 = multi.getFilesystemName(img);		 
+	file1_old = multi.getOriginalFileName(img);	  
+	
+	String f1 = (String)files.nextElement();
+	file1 = multi.getFilesystemName(f1);		 
+	file1_old = multi.getOriginalFileName(f1);	 
+
+	String f2 = (String)files.nextElement();
+	file2 = multi.getFilesystemName(f2);
+	file2_old = multi.getOriginalFileName(f2);
+	
+} catch (Exception e) {
+	e.printStackTrace();
+}
+%>

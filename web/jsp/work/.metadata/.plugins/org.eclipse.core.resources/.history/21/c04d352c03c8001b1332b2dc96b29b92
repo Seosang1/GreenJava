@@ -1,0 +1,9 @@
+package vo;
+
+public class ProductInfo {
+// 하나의 상품 정보를 저장할 클래스
+	private String pi_id, pi_name, cs_id, b_id, pi_origin, pi_option, pi_img1, pi_img2;
+	private String pi_img3, pi_desc, pi_isview, pi_date;
+	private int pi_cost, pi_price, pi_dicount, pi_stock, pi_salecnt, pi_review, ai_idx;
+	private double pi_star;
+}

@@ -1,0 +1,47 @@
+package action;
+
+import java.util.*;
+import javax.servlet.http.*;
+import action.*;
+import vo.*;
+
+public class MemberProcAct implements Action {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		String wtype = request.getParameter("wtype");	// 가입, 수정, 탈퇴 여부를 구분짓는 값
+		MemberInfo memberInfo = null;
+		
+		if (wtype.equals("in") || wtype.equals("up")) {
+			// 현재 처리하는 작업이 회원 가입이나 정보 수정일 경우(사용자가 입력/수정한 데이터들을 받아와야 함)
+			memberInfo = new MemberInfo();
+			// 입력 또는 수정할 회원 정보들을 담을 인스턴스 생성
+			if(wtype.equals("in")) {
+			memberInfo.setMi_id(request.getParameter("mi_id").trim().toLowerCase());
+			// 사용자가 입력하는 값엔 trim() 꼭 붙이자
+			memberInfo.setMa_zip(request.getParameter("ma_zip"));
+			memberInfo.setMa_addr1(request.getParameter("ma_addr1"));
+			memberInfo.setMa_addr2(request.getParameter("ma_addr2").trim());
+			// 회원 가입 시 기본주소에 대한 정보도 같이 받아옴. 단, 수정할 때는 ㄴㄴ
+		} else {
+			HttpSession session = request.getSession();	
+			// 유저정보 수정일 경우 session에서 로그인 객체를 받아옴(JSP가 아니므로 session 인스턴스를 직접 생성해야 함)
+			MemberInfo tmpMember = (MemberInfo)session.getAttribute("loginMember");
+			memberInfo.setMi_id(tmpMember.getMi_id());	
+			// 정보 수정일 경우 로그인 되어있는 인스턴스에서 회원ID 정보를 가져옴
+			// 정보 수정에서는 주소를 변경하지 않고 주소록 관리에서 주소 수정을 처리함
+		}
+			memberInfo.setMi_pwd(request.getParameter("mi_pwd").trim());
+			memberInfo.setMi_name(request.getParameter("mi_name").trim());
+			memberInfo.setMi_birth(request.getParameter("by") + "-" + request.getParameter("bm") + "-" + request.getParameter("bd"));
+			memberInfo.setMi_gender(request.getParameter("gender"));
+			memberInfo.setMi_phone(request.getParameter("p1") + "-" + request.getParameter("p2").trim() + "-" + request.getParameter("p3").trim());
+			memberInfo.setMi_email(request.getParameter("e1").trim() + "@" + request.getParameter("e3").trim());
+			memberInfo.setMi_issns(request.getParameter("issns"));
+			memberInfo.setMi_ismail(request.getParameter("ismail"));			
+		}
+		
+		if (wtype.equals("up") || wtype.equals("del")) {
+			// 현재 처리하는 작업이 정보 수정이나 탈퇴일 경우(where절에서 사용할 회원ID를 받아와야 함)
+		}
+	}
+}

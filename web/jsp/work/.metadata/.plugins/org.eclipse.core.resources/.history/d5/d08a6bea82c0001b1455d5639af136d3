@@ -1,0 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.oreilly.servlet.MultipartRequest" %>
+<%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %>
+<%@ page import="java.util.*" %>
+<%
+String uploadPath = request.getRealPath("D:\ssw\web\jsp\work\testExam\WebContent\upload");
+int maxSize = 5 * 1024 * 1024;	 
+String name = "", img = "";	
+String file1 = "", file2 = "", file3 = "";	
+String img_old = "", file1_old = "", file2_old = "", file3_old;  	
+
+request.setCharacterEncoding("utf-8"); 
+
+try {
+	MultipartRequest multi = new MultipartRequest(
+		request, 	// request객체로 multi인스턴스로 전송된 데이터들을 받기 위함
+		uploadPath, // 서버에 실제로 파일이 저장될 위치 지정
+		maxSize, 	// 한 번에 업로드할 수 있는 최대크기 지정(byte단위)
+		"utf-8", 	// 파일의 인코딩 방식
+		new DefaultFileRenamePolicy());	// 파일 이름의 중복 처리
+
+	Enumeration files = multi.getFileNames();	// 업로드할 파일 이름들을 Enumeration 형으로 받아옴
+
+	String f1 = (String)files.nextElement();
+	file1 = multi.getFilesystemName(f1);		// 현재 업로드 된 파일이 저장될 때 사용한 이름
+	file1_old = multi.getOriginalFileName(f1);	// 현재 업로드 된 파일의 원래 이름
+
+	String f2 = (String)files.nextElement();
+	file2 = multi.getFilesystemName(f2);
+	file2_old = multi.getOriginalFileName(f2);
+	
+} catch (Exception e) {
+	e.printStackTrace();
+}
+%>

@@ -1,0 +1,31 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%
+Calendar today = Calendar.getInstance();
+int Year = today.get(Calendar.YEAR);
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<style>
+body {margin:0;}
+#wrapper {margin:0 auto; width:700px; text-align:center;}
+</style>
+</head>
+<body>
+<div id="wrapper">
+	<select name="schYear">
+<% for (int i = 1990 ; i <= Year ; i++) { %> 
+		<option value="<%=i%>"><%=i%></option>
+<% } %> </select>년 
+	<select name="schMonth">   
+<% for (int i = 1; i <= 12; i++) { %>  
+	<option value="<%=i%>"><%=i%></option>
+<% } %>
+	</select>월
+</div> 
+</body>
+</html>

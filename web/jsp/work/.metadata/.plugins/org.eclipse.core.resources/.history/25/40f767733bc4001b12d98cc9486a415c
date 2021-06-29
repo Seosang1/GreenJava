@@ -1,0 +1,69 @@
+package action;
+
+import javax.servlet.http.*; 
+import java.io.UnsupportedEncodingException;
+import java.util.*;
+import svc.*;
+import vo.*;
+
+public class MemberProcAct implements Action {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+      request.setCharacterEncoding("utf-8");
+      String wtype = request.getParameter("wtype");   //가입, 수정, 탈퇴 여부를 구분짓는 값
+      MemberInfo memberInfo = null;
+      
+      
+      if (wtype.equals("in") || wtype.equals("up")) {
+         // 현재 처리하는 작업이 회원 가입이나 정보 수정일 경우(사용자가 입력/수정한 데이터들을 받아와야 함)
+          memberInfo = new MemberInfo(); //입력 또는 수정할 회원정보들을 담을 인스턴스 생성
+          if (wtype.equals("in")) {
+               memberInfo.setMi_id(request.getParameter("mi_id").trim().toLowerCase());
+               memberInfo.setMa_zip(request.getParameter("ma_zip"));
+               memberInfo.setMa_addr1(request.getParameter("ma_addr1"));
+               memberInfo.setMa_addr2(request.getParameter("ma_addr2").trim());
+               // 회원 가입시 기본주소에 대한 정보도 같이 받아옴
+         } else {
+            HttpSession session = request.getSession();
+            // JSP가 아니므로 session 인스턴스를 직접 생성해야 함
+            MemberInfo tmpMember = (MemberInfo)session.getAttribute("loginMember");
+            memberInfo.setMi_id(tmpMember.getMi_id());
+            // 정보수정일 경우 로그인 되어 있는 인스턴스에서 회원ID 정보를 가져옴
+            // 정보수정에서는 주소를 변경하지 않고 주소록 관리에서 주소 수정을 처리함
+         }
+         memberInfo.setMi_pwd(request.getParameter("mi_pwd").trim());
+         memberInfo.setMi_name(request.getParameter("mi_name").trim());
+         memberInfo.setMi_birth(request.getParameter("by") + "-" + 
+               request.getParameter("bm") + "-" + request.getParameter("bd"));
+         memberInfo.setMi_gender(request.getParameter("mi_gender"));
+         memberInfo.setMi_phone(request.getParameter("p1") + "-" + 
+               request.getParameter("p2").trim() + "-" + request.getParameter("p3").trim());
+         memberInfo.setMi_email(request.getParameter("e1").trim() + "@" + 
+                request.getParameter("e3").trim());
+         memberInfo.setMi_issns(request.getParameter("mi_issns"));
+         memberInfo.setMi_ismail(request.getParameter("mi_ismail"));   
+      }
+   
+      
+      MemberProcSvc memberProcSvc = new MemberProcSvc();
+      int result = 0;
+      String lnk = "/index.jsp";
+      switch (wtype) {
+         case "in" :    //회원 가입인 경우
+            result = memberProcSvc.memberJoin(memberInfo);
+            lnk = "login_form.jsp";
+            break;
+         case "up" :    //정보 수정인 경우
+            // result = memberProcSvc.memberUpdate(memberInfo);
+            break;
+         case "del" :    //회원 탈퇴인 경우
+            HttpSession session = request.getSession();
+            MemberInfo tmpMember = (MemberInfo)session.getAttribute("loginMember");
+            // result = memberProcSvc.memberDelete(tmpMember.getMi_id());
+            break;
+      }
+      
+      ActionForward forward = new ActionForward();
+      forward.setRedirect(true);	// dispatch가 아닌 sendRedirect방식으로 이동
+      forward.setPath(lnk);
+   }
+}

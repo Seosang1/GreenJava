@@ -1,0 +1,62 @@
+package dao;
+
+import static db.JdbcUtil.*;
+import javax.sql.*;
+import java.sql.*;
+import java.util.*;
+import vo.*;
+ 
+public class NoticeDao {
+// 공지사항 관련 DB작업을 실제로 처리하는 메소드들을 담은 클래스
+	private static NoticeDao noticeDao; 
+	private Connection conn;	 
+	private NoticeDao() {} 
+	
+	public static NoticeDao getInstance() {
+		if (noticeDao == null) noticeDao = new NoticeDao();
+		return noticeDao;
+	}
+	public void setConnection(Connection conn) { 
+		this.conn = conn;
+	}
+	
+	public int getArticleCount(String where) {
+	// 게시글의 총 개수를 리턴하는 메소드
+		Statement stmt = null;
+		ResultSet rs = null;
+		int rcnt = 0;
+		
+		try {
+			String sql = "select count(*) from t_brd_notice" + where;
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			if (rs.next()) rcnt = rs.getInt(1);
+			// 게시글의 개수를 rcnt에 저장(게시글이 없으면 0이 저장됨)			
+		} catch (Exception e) { 
+			System.out.println("getArticleCount() 메소드 오류");
+			e.printStackTrace();
+		} finally {
+			close(rs); 	close(stmt);
+		}
+		
+		return rcnt;
+	}
+	
+	public ArrayList<NoticeInfo> getArticleList(String where, int cpage, int psize) {
+	// 게시글의 목록을 ArrayList<NoticeInfo>형으로 리턴하는 메소드
+			ArrayList<NoticeInfo> articleList = new ArrayList<NoticeInfo>();
+			Statement stmt = null;
+			ResultSet rs = null;
+			
+			try {
+				
+			} catch (Exception e) { 
+				System.out.println("getArticleCount() 메소드 오류");
+				e.printStackTrace();
+			} finally {
+				close(rs); 	close(stmt);
+			}
+			
+			return articleList;
+	}
+}

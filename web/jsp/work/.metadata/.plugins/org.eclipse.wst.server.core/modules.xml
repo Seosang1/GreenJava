@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<modules>
+  <module moduleId="org.eclipse.jst.jee.server:mvcSite" serverId="Apache Tomcat v8.5 (2) at localhost"/>
+  <module moduleId="org.eclipse.jst.jee.server:basic" serverId="Tomcat v8.5 Server at localhost"/>
+  <module moduleId="org.eclipse.jst.jee.server:sessCookie" serverId="Tomcat v8.5 Server at localhost"/>
+  <module moduleId="org.eclipse.jst.jee.server:dbTest" serverId="Tomcat v8.5 Server at localhost"/>
+  <module moduleId="org.eclipse.jst.jee.server:testExam" serverId="Apache Tomcat v8.5 (2) at localhost"/>
+  <module moduleId="org.eclipse.jst.jee.server:uploadMail" serverId="Tomcat v8.5 Server at localhost"/>
+  <module moduleId="org.eclipse.jst.jee.server:jspSite" serverId="Apache Tomcat v8.5 (2) at localhost"/>
+</modules>

@@ -1,0 +1,25 @@
+package svc;
+
+import static db.JdbcUtil.*;
+import java.util.*;
+import java.sql.*;
+import dao.*;
+import vo.*;
+
+public class TestViewSvc {
+// 게시글 보기의 비즈니스 로직을 처리하는 클래스
+	public TestInfo getArticle(int idx) { 
+		TestInfo article = null;
+		Connection conn = getConnection();
+		TestBrdDao testBrdDao = TestBrdDao.getInstance();
+		testBrdDao.setConnection(conn);
+		
+		int result = testBrdDao.readCountUp(idx);	 
+		if (result > 0)	commit(conn);	 
+		else			rollback(conn);	  
+		article = testBrdDao.getArticle(idx);
+		// 사용자가 선택한 게시글의 정보를 받아와 article에 저장
+
+		return article;
+	}
+}

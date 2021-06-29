@@ -1,0 +1,8 @@
+공지사항
+ - 정보 : NoticeInfo
+ - 컨트롤러 : NoticeCtrl - *.ntc
+ - 목록(brd_list.ntc) : notice_list.jsp, NoticeListAction, NoticeListSvc
+ - 보기(brd_view.ntc) : notice_view.jsp, NoticeViewAction, NoticeViewSvc
+ - 폼(brd_form.ntc) : notice_form.jsp, NoticeFormAction, NoticeFormSvc
+ - 처리(brd_proc.ntc) : NoticeProAction, NoticeProSvc
+ - DB : NoticeDao
