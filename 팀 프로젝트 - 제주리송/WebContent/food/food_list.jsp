@@ -1,0 +1,221 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %> 
+<%@ page import="db.JdbcUtil"%>
+<%@ page import="vo.*" %>
+<%
+request.setCharacterEncoding("utf-8");
+
+ArrayList<FoodInfo> foodList = (ArrayList<FoodInfo>)request.getAttribute("foodList");   
+PageInfo pageInfo = (PageInfo)request.getAttribute("pageInfo");   
+FoodInfo foodInfo = (FoodInfo)request.getAttribute("foodInfo"); 
+
+String args = "", schargs = "";
+// 검색관련 쿼리스트링 제작 
+args = "?cpage=" + pageInfo.getCpage() + schargs;
+if (pageInfo.getKeyword() == null)	schargs += "&keyword=";
+else		schargs += "&keyword=" + pageInfo.getKeyword(); 
+
+String src = request.getContextPath() + "/common/images/InfoImg/";
+%> 
+	  
+<!-- content 영역 --> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="common/css/form.css?alter"> 
+<link rel="stylesheet" type="text/css" href="common/css/button.css?alter"> 
+<link rel="stylesheet" type="text/css" href="common/css/default.css?alter">    
+<%-- <link rel="stylesheet" type="text/css" href="common/css/food.css?alter">   --%>  
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Insert title here</title>   
+<style> 
+div {margin:0 auto; text-align:center;}
+#totalList {width:1180px; margin:0 auto; height:100%; display:inline-block;} 
+#fdRay {display:inline-block;}
+
+div #top {
+    width:100%; height:50px; text-align:center; font-size:25px; color:#4f4f4f; 
+    font-weight:bold; padding-top:30px; margin:0;	
+	}
+div #infoInc {display:inline-block;}
+
+div #foodOrd {text-align:right; marin:0 auto;}
+div #fdSch {width:*;  }
+div .foodList {width:100%; display:inline-block; position:relative; height:100%;} 
+div .foodCard { position:absolute; width:100%;} 
+
+div .br {display:block; height:30px; width:*; }
+
+div .fdFilter {display:inline-block;} 
+div #fdFilterBox {width:250px; height:1000px; border:3px; left:0; position:absolute;}
+div .fdFilter #filterLine {display:block;} 
+div .fdFilter #fdMap {margin: 10px; display:block; }
+
+#fdMapTitile {display:block;}
+div #fdOrdTitle {display:block; border:5px #4f4f4f solid;}
+
+div #foodInline {display:inline-block; width:100%; margin-left:100px}
+div .foodBr {display:inline-block; width:100%; height:30px;}
+
+
+.outerBox {
+    border:5px #4f4f4f solid; width:240px; text-align:center;
+    padding:5px; margin:10px; display:inline-block;
+}
+.innerBox {
+    border:1px #000 solid; width:230px; height:190px; padding:5px; 
+    text-align:center; display:table-cell; vertical-align:middle;
+}
+.foodName { font-size:15px; padding-top:7px; padding-bottom:3px; font-weight:bold; }
+ 
+div .tourInfoTitle {display:flex; }
+div .infoImg {width:150px; height:100px;} 
+div #foodPage { width:100%;}
+</style>
+</head>
+<body>  
+<input type="hidden" name="ord" value="<%=pageInfo.getOrd() %>" />
+<input type="hidden" name="psize" value="<%=pageInfo.getPsize() %>" />
+<div id="totalList"> 
+<!-- 헤더영역 -->
+<%@ include file="../_inc/incHead.jsp" %>  
+<form name="frmFood" action="" method="get">
+	<div id="fdLay">
+		<div id="cata">분류</div>
+			<p width="40%"></p>  
+		<div id="top">제주 음식점 추천 목록</div> 
+			<div id="foodOrd">
+				<p style >정렬조건 : 
+					<a href="food_list.food<%=args%>&psize=9">
+					<img src="food/../common/images/PublisingImg/icon_list.png" width="15" align="absmiddle" /></a>&nbsp;&nbsp;
+				</p>
+			</div>   
+	</div> 
+	<div id="infoInc">
+		<div class="tourInfoTitle">
+			<div class="infoSrc" id="infoRel">
+				<a href="food_list.food" ><img src="<%=src %>foodMain.png" class="infoImg" /></a>
+			</div>
+			<div class="infoSrc" class="infoAb">
+				<a href="culture_info.info" ><img src="<%=src %>cultMain.png" class="infoImg" /></a>
+			</div>
+			<div class="infoSrc" class="infoAb">
+				<a href="traffic_info.info" ><img src="<%=src %>trafficMain.png" class="infoImg" /></a>
+			</div>
+			<div class="infoSrc" class="infoAb">
+				<a href="guide_info.info" ><img src="<%=src %>guideMain.png" class="infoImg" /></a>
+			</div>
+		</div>  
+	</div> 
+	<div class="br"></div>
+		<div class="foodList">   
+			<div align="right" id="fdSch">
+				<span>상호명<input type="text" name="keyword" value="<%=pageInfo.getKeyword() %>" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="식당 검색" /> </span> 
+			</div><br />  
+			<div class="foodCard">
+				<div id="fdFilterBox" >
+					<div id="filterLine">
+						<div id="fdMapTitle" >
+							<h2>지도에서 선택</h2>
+						</div>
+							<div id="fdMap" class="fdFilter">
+								
+							</div>
+						<div id="fdOrdTitle">
+							<h3>음식점 분류</h3>
+						</div>
+							<div id="fdOrd" class="fdFilter">
+								<ul id="fdOrdBox">
+									<li class="fdOrdChk"><input type="checkbox" />한식
+								</ul>
+							</div>
+					</div>
+				</div>
+				<div id="foodInline">
+					<%
+					// 지역 이름 comm
+					Common comm = new Common(); 
+					if (foodList != null && foodList.size() > 0) {
+					// 상품 검색결과가 있으면
+						for (int i = 0 ; i < foodList.size() ; i++) {
+						FoodInfo fi = foodList.get(i);  
+						String lnk = "<a href=\"food_view.food" + args + "&id=" + fi.getFood_code() + 
+							"&ord=" + pageInfo.getOrd() + "&psize=" + pageInfo.getPsize() + "\">"; 
+							if (pageInfo.getPsize() == 9) {	// 식당목록을 한 줄에 3개씩 보여주기 
+								if (i % 3 == 0)  out.println("<div class=\"foodBr\"></div>");  
+				%> 
+							<div class="outerBox">
+								<div class="innerBox"> 
+									<%=lnk%><img src="food/../common/images/FoodImg/<%=fi.getFood_img1()%>" width="225" height="200"></a>
+									<div><br />
+										<span class="foodName">
+										<%=fi.getFood_name()%><br />
+										</span>
+										<span class="foodContent">
+										<%=fi.getFood_detail()%><br /> 
+										지역 : <%=comm.getArea().get(fi.getFood_area()) %><br />
+										</span>
+									</div>   
+								</div>
+							</div> 
+							<% 
+							}
+						}
+					} else {
+						out.println("<tr><th>검색결과가 없습니다.</th></tr>");
+					}
+						%>   
+			</div>  
+			
+				<%
+				if (foodList != null && foodList.size() > 0) {
+					args = "?ord=" + pageInfo.getOrd() + "&psize=" + pageInfo.getPsize() + schargs;
+				
+					out.println("<div id=\"foodPage\">");
+				
+					if (pageInfo.getCpage() == 1) {	// 현재 페이지 번호가 1이면
+						out.println("[&lt;&lt;]&nbsp;&nbsp;[&lt;]&nbsp;&nbsp;");
+					} else {
+						out.print("<a href='food_list.food" + args + "&cpage=1" + "'>");
+						out.println("[&lt;&lt;]</a>&nbsp;&nbsp;");
+						out.print("<a href='food_list.food" + args + 
+							"&cpage=" + (pageInfo.getCpage() - 1) + "'>");
+						out.println("[&lt;]</a>&nbsp;&nbsp;");
+					} // 첫 페이지와 이전 페이지 링크
+				
+					for (int i = 1, k = pageInfo.getSpage() ; i <= pageInfo.getBsize() && k <= pageInfo.getEpage() ; i++, k++) {
+					// i : 루프돌릴 횟수를 검사하는 용도의 변수, k : 페이지 번호 출력용 변수
+					// 조건 : bsize만큼 루프를 도는데 페이지가 마지막 페이지일 경우 bsize보다 작아도 멈춤
+						if (pageInfo.getCpage() == k) {	// 현재 페이지 번호일 경우 링크없이 강조만 함
+							out.print("&nbsp;<strong>" + k + "</strong>&nbsp;");
+						} else {
+							out.print("&nbsp;<a href='food_list.food" + args + "&cpage=" + k + "'>");
+							out.print(k + "</a>&nbsp;");
+						}
+					} 
+				
+					if (pageInfo.getCpage() == pageInfo.getPcnt()) {	// 현재 페이지번호가 마지막 페이지 번호이면
+						out.println("&nbsp;&nbsp;[&gt;]&nbsp;&nbsp;[&gt;&gt;]");
+					} else {
+						out.println("&nbsp;&nbsp;<a href='food_list.food" + args + 
+							"&cpage=" + (pageInfo.getCpage() + 1) + "'>[&gt;]</a>");
+						out.print("&nbsp;&nbsp;<a href='food_list.food" + args + 
+							"&cpage=" + pageInfo.getPcnt() + "'>");
+						out.println("[&gt;&gt;]</a>");
+					}
+				
+					out.println("</div>");
+				}
+				%> 
+			</div> 
+		</div>
+	</div>  
+</form> 
+<script src="food/jquery-1.11.3.min.js"></script>
+<script src="food/star.js"></script>
+</body>
+</html>
+
+	  
