@@ -1,0 +1,93 @@
+공지사항
+ - 정보 : NoticeInfo
+ - 컨트롤러 : NoticeCtrl - *.ntc
+ - 목록(brd_list.ntc) : notice_list.jsp, NoticeListAction, NoticeListSvc
+ - 보기(brd_view.ntc) : notice_view.jsp, NoticeViewAction, NoticeViewSvc
+ - 폼(brd_form.ntc) : notice_form.jsp, NoticeFormAction, NoticeFormSvc
+ - 처리(brd_proc.ntc) : NoticeProcAction, NoticeProcSvc
+ - DB : NoticeDao
+ - 사용자 요청 -> NoticeCtrl -> Notice~Action -> Notice~Svc -> Notice~Dao
+
+회원-회원가입, 정보수정, 회원탈퇴
+ - 정보 : MemberInfo
+ - 컨트롤러 : MemberCtrl - *.mem
+ - 가입(join_form.jsp) : DupIDCtrl, DupIDSvc, DupIDDao
+ - 수정(mypage.mem) : mypage.jsp, MemberUpdateAct
+ - 처리(proc.mem) : MemberProcAct, MemberProcSvc
+ - DB : MemberDao
+
+상품(프론트) : 목록(검색조건), 상세보기(옵션선택, 수량, 후기, 관련상품)
+ - 정보 : ProductInfo, CataBigInfo, CataSmallInfo, BrandInfo
+ - 컨트롤러 : ProductCtrl - *.pdt
+ - 목록(pdt_list.pdt) : pdt_list.jsp, PdtListAct, PdtListSvc
+ - 보기(pdt_view.pdt) : pdt_view.jsp, PdtViewAct, PdtViewSvc
+ - DB : ProductDao
+
+주문(프론트) : 장바구니(입력, 수정, 삭제, 화면), 결제화면(배송지, 결제 정보), 결제처리(insert)
+ - 정보 : ProductInfo, CartInfo
+ - OrderCtrl - *.ord
+ - 장바구니 화면(cart_list.ord) : cart_list.jsp, CartListAct, CartListSvc
+ - 장바구니 담기 처리(cart_in_proc.ord) : CartInProcAct, CartInProcSvc
+ - 장바구니 수정 처리(cart_up_proc.ord) : CartUpProcAct, CartUpProcSvc
+ - 장바구니 삭제 처리(cart_del_proc.ord) : CartDelProcAct, CartDelProcSvc
+ - 결제 화면(order_form.ord) : order_form.jsp, OrderFormAct, OrderFormSvc
+ - 결제 처리(order_proc.ord) : OrderProcAct, OrderProcSvc
+ - DB : OrderDao
+
+
+
+
+
+
+
+
+
+
+어드민
+index.jsp : 어드민의 각 메뉴에 링크연결
+login_form.jsp : 어드민 모드의 로그인 폼
+logout.jsp : 어드민 모드의 로그아웃
+
+로그인
+AdminLoginCtrl.java
+AdminLoginSvc.java
+AdminLoginDao.java
+
+상품(어드민) : 목록(검색조건), 상품등록 폼, 상품수정 폼(상품보기 여부 포함), 처리(검색, 등록, 수정)
+ - 정보 : ProductInfo, CataBigInfo, CataSmallInfo, BrandInfo
+ - 컨트롤러 : AdminPdtCtrl - *.pdta
+ - 목록(pdt_list.pdta) : pdt_list.jsp, AdminPdtListAct, AdminPdtListSvc
+ - 등록폼(pdt_in_form.pdta) : pdt_in_form.jsp, AdminPdtInAct, AdminPdtInSvc
+ - 수정폼(pdt_up_form.pdta) : pdt_up_form.jsp, AdminPdtUpAct, AdminPdtUpSvc
+ - 처리(pdt_proc.pdta) : AdminPdtProcAct, AdminPdtProcSvc
+ - DB : AdminPdtDao
+
+
+
+
+
+
+
+ID 중복 체크
+1. 사용자가 입력한 값을 서버로 전송
+2. 서버로 보낸 값을 받아 DB에서 중복체크 쿼리 실행
+3. 쿼리 실행결과에 따라 중복여부를 사용자에게 알려줌
+4. 모든 작업은 사용자가 알아차리지 못하게 동작됨(새로 고침없이 동작한다는 의미)
+
+
+장바구니 담기
+1. 선택한 상품과 옵션, 수량 등의 데이터를 장바구니 테이블에 등록(insert or update)
+2. 등록 후 장바구니 화면으로 이동
+
+
+
+
+
+
+
+
+
+
+
+
+

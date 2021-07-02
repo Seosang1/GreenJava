@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <servers>
-  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/Apache Tomcat v8.5 (2) at localhost-config" deployDir="wtpwebapps" hostname="localhost" id="Apache Tomcat v8.5 (2) at localhost" name="Apache Tomcat v8.5 (2) at localhost" runtime-id="Apache Tomcat v8.5 (2)" server-type="org.eclipse.jst.server.tomcat.85" server-type-id="org.eclipse.jst.server.tomcat.85" start-timeout="45" stop-timeout="15" testEnvironment="true" timestamp="6">
-    <list key="modules" value0="dbTest::org.eclipse.jst.jee.server:dbTest::jst.web::3.1" value1="sessCookie::org.eclipse.jst.jee.server:sessCookie::jst.web::3.1" value2="jspSite::org.eclipse.jst.jee.server:jspSite::jst.web::3.1" value3="mvcSite::org.eclipse.jst.jee.server:mvcSite::jst.web::3.1" value4="uploadMail::org.eclipse.jst.jee.server:uploadMail::jst.web::3.1" value5="basic::org.eclipse.jst.jee.server:basic::jst.web::3.1" value6="testExam::org.eclipse.jst.jee.server:testExam::jst.web::3.1"/>
+  <server auto-publish-setting="2" auto-publish-time="1" configuration-id="/Servers/Tomcat v8.5 Server at localhost-config" deployDir="wtpwebapps" hostname="localhost" id="Tomcat v8.5 Server at localhost" name="Tomcat v8.5 Server at localhost" runtime-id="Apache Tomcat v8.5" server-type="org.eclipse.jst.server.tomcat.85" server-type-id="org.eclipse.jst.server.tomcat.85" start-timeout="45" stop-timeout="15" testEnvironment="true" timestamp="7">
+    <list key="modules" value0="jejurisong::org.eclipse.jst.jee.server:jejurisong::jst.web::3.1" value1="mvcSite::org.eclipse.jst.jee.server:mvcSite::jst.web::3.1" value2="sswProject::org.eclipse.jst.jee.server:sswProject::jst.web::3.1"/>
   </server>
 </servers>

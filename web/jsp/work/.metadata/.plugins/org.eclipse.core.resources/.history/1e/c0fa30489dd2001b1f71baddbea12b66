@@ -1,0 +1,30 @@
+package action.food;
+
+import javax.servlet.http.*; 
+import java.util.*;
+import java.io.*;
+import svc.food.*;
+import vo.*;
+import java.util.HashMap;  
+
+public class FoodViewAction implements action.Action {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ArrayList<FoodInfo> foodList = new ArrayList<FoodInfo>();
+
+		request.setCharacterEncoding("utf-8");
+		int cpage = 1, psize = 9, bsize = 10, spage, epage, rcnt, pcnt;
+		if (request.getParameter("cpage") != null)
+			cpage = Integer.parseInt(request.getParameter("cpage"));{
+				
+			}
+			
+			
+			
+		ActionForward forward = new ActionForward();
+		forward.setPath("food/food_view.jsp");
+ 
+		return forward; 
+			
+		} 
+
+}

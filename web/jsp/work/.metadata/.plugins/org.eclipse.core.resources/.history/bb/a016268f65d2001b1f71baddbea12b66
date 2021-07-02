@@ -1,0 +1,72 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="layer-cont">
+<!-- svg 영역 start -->
+<div id="jejumap" class="hide_ie8_under" style="width:451px; height:317px; margin-bottom:20px;">
+<!-- svg 삽입 -->
+<!-- tpl : template/part/svg_map_1.html -->
+
+<!-- 상단 검색영역에 들어가는 지도 -->
+
+<!-- svg 삽입 -->
+<div id="area_select" style="width:451px; height:317px; background:url(/images/item/map/bg_map_jeju.png) no-repeat;">
+	<svg version="1.1" width="451" height="317">
+		<!-- 제주시-->
+		<polygon points="149,83,159,92,170,91,174,103,176,128,184,141,197,144,214,157,224,155,237,148,245,143,264,132,278,117,273,100,268,82,268,70,254,57,239,44,204,47,121,54,117,69" fill="url(#area_off)" data-value="1" ss-data-value="SSA1" style="cursor: pointer;"></polygon>
+
+		<!-- 제주시 동부-->
+		<polygon points="258,53,262,62,272,68,272,86,280,113,275,122,262,136,248,142,234,149,247,150,272,138,284,134,296,131,300,127,309,119,321,115,330,119,348,110,363,106,375,99,384,97,394,86,443,83,440,48,362,23,286,27" fill="url(#area_off)" data-value="11" ss-data-value="SSA3" style="cursor: pointer;"></polygon>
+
+		<!-- 제주시 서부-->
+		<polygon points="28,214,54,201,75,211,77,204,98,190,106,183,118,178,126,176,136,173,161,175,167,160,182,156,202,154,211,155,206,145,191,145,177,133,177,119,172,95,169,90,162,92,155,82,114,74,87,89,49,122,9,178,15,196" fill="url(#area_off)" data-value="12" ss-data-value="SSA6" style="cursor: pointer;"></polygon>
+
+		<!-- 서귀포시-->
+		<polygon points="267,231,261,212,252,197,247,180,225,155,214,156,211,156,197,157,192,159,186,158,178,158,166,160,164,172,158,185,157,190,151,194,147,207,142,204,140,199,136,204,139,217,132,243,124,256,185,275,248,256" fill="url(#area_off)" data-value="4" ss-data-value="SSA2" style="cursor: pointer;"></polygon>
+
+		<!-- 서귀포시 동부-->
+		<polygon points="221,152,243,169,250,183,265,213,270,234,325,236,367,217,413,151,440,122,432,107,421,93,411,88,395,88,385,97,376,101,365,107,351,110,341,115,328,123,320,117,305,124,296,133,283,135,264,144,246,151" fill="url(#area_off)" data-value="41" ss-data-value="SSA4" style="cursor: pointer;"></polygon>
+
+		<!-- 서귀포시 서부-->
+		<polygon points="116,309,124,252,133,240,136,221,136,202,140,197,147,202,150,193,157,188,162,176,148,177,132,173,125,178,116,178,111,184,105,185,93,196,75,205,74,211,49,203,38,209,36,214,59,257,59,278,83,290,77,302,93,313" fill="url(#area_off)" data-value="42" ss-data-value="SSA5" style="cursor: pointer;"></polygon>
+
+		<defs>
+			<pattern id="area_off" patternUnits="userSpaceOnUse" x="0" y="0" width="451" height="317">
+				<image xlink:href="/food/../common/images/FoodImg/map/bg_map_jeju.png" width="451" height="317"></image>
+			</pattern>
+			<pattern id="area_on" patternUnits="userSpaceOnUse" x="0" y="0" width="451" height="317">
+				<image xlink:href="/food/../common/images/FoodImg/map/img_map_jeju_07.png" width="451" height="317"></image>
+			</pattern>
+		</defs>
+	</svg>
+</div>
+<label class="lab_choice check-all on">
+	<input type="checkbox" id="check_map_all" class="screen_out"><span class="ico_comm ico_chkbox"></span>전체선택
+</label>
+</div>
+<!-- svg 영역 end -->
+<!-- ie8이하일 경우 -->
+<div class="pd20 show_ie8_under" style="display: none;">
+	<ul class="group_choice">
+		<li><label class="lab_choice"><input type="checkbox" id="local[]_0" name="local[]" class="screen_out" value="all" checked="checked"><span class="ico_comm ico_chkbox"></span>전체</label></li>
+		<li><label class="lab_choice"><input type="checkbox" id="local[]_1" name="local[]" class="screen_out" value="1"><span class="ico_comm ico_chkbox"></span>제주시</label></li>
+		<li><label class="lab_choice"><input type="checkbox" id="local[]_2" name="local[]" class="screen_out" value="11"><span class="ico_comm ico_chkbox"></span>제주시 동부</label></li>
+		<li><label class="lab_choice"><input type="checkbox" id="local[]_3" name="local[]" class="screen_out" value="12"><span class="ico_comm ico_chkbox"></span>제주시 서부</label></li>
+		<li><label class="lab_choice"><input type="checkbox" id="local[]_4" name="local[]" class="screen_out" value="4"><span class="ico_comm ico_chkbox"></span>중문/서귀포</label></li>
+		<li><label class="lab_choice"><input type="checkbox" id="local[]_5" name="local[]" class="screen_out" value="41"><span class="ico_comm ico_chkbox"></span>서귀포시 동부</label></li>
+		<li><label class="lab_choice"><input type="checkbox" id="local[]_6" name="local[]" class="screen_out" value="42"><span class="ico_comm ico_chkbox"></span>서귀포시 서부</label></li>
+	</ul>
+</div> 
+<p class="pd10 align-center">지도에서 검색 지역을 선택하고 확인 버튼을 클릭해주세요. (다중선택 가능)</p>
+<div class="btn-group">
+	<a href="#none" class="btn_comm" id="btn_search_map_close">확인</a>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,517 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script>
+var slide_speed = 200;
+
+$(function() {
+
+	// 검색에서 지도를 이용한 지역
+	$('#area_select polygon').css('cursor','pointer').on('click', function() {
+		var check_cnt = 0;
+		$('#area_select polygon').each(function() {
+			if ($(this).attr('fill')=='url(#area_on)') {
+				check_cnt++;
+			}
+		});
+
+		if (check_cnt==6) {
+			$('#area_select polygon').each(function() {
+				$(this).attr('fill', 'url(#area_off)');
+				$('input[name^=local][value='+$(this).attr('data-value')+']').trigger('click');
+			});
+
+			$(this).attr('fill', 'url(#area_on)');
+			$('input[name^=local][value='+$(this).attr('data-value')+']').prop('checked', false).parent().removeClass('on');
+			$('input[name^=local][value='+$(this).attr('data-value')+']').trigger('click');
+		} else {
+			if ($(this).attr('fill').indexOf('area_off') > -1) {
+				$(this).attr('fill', 'url(#area_on)');
+				$('input[name^=local][value='+$(this).attr('data-value')+']').prop('checked', false).parent().removeClass('on');
+				$('input[name^=local][value='+$(this).attr('data-value')+']').trigger('click');
+			} else {
+				$(this).attr('fill', 'url(#area_off)');
+				if ($('input[name^=local][value=all]').prop('checked')) {
+					$('input[name^=local]').each(function() {
+						$(this).parent().addClass('on');
+						$(this).prop('checked', true);
+					});
+				}
+				$('input[name^=local][value='+$(this).attr('data-value')+']').prop('checked', true).parent().addClass('on');
+				$('input[name^=local][value='+$(this).attr('data-value')+']').trigger('click');
+			}
+		}
+	});
+
+	// 검색 중에 지역
+	$('#slt_search_map').on('click', function() {
+		if ($('#map_jeju').css('display') == 'none') {
+			$('#map_jeju').show();
+		} else {
+			$('#map_jeju').hide();
+		}
+		return false;
+	});
+
+	// 검색 지도의 닫기버튼
+	$('#btn_search_map_close').on('click', function() {
+		$('#map_jeju').hide();
+		return false;
+	});
+
+	// 검색 지도의 전체선택
+	$('#check_map_all').on('change', function() {
+		if ($(this).prop('checked')) {
+			$('#area_select polygon').css('cursor','pointer').each(function() {
+				$(this).attr('fill', 'url(#area_on)');
+			});
+			$(this).parent().addClass('on');
+			$('input[name^=local][value=all]').prop('checked', false).parent().removeClass('on');
+			$('input[name^=local][value=all]').trigger('click');
+		} else {
+			$('#area_select polygon').css('cursor','pointer').each(function() {
+				$(this).attr('fill', 'url(#area_off)');
+			});
+			$(this).parent().removeClass('on');
+			$('input[name^=local][value=all]').prop('checked', true).parent().removeClass('on');
+			$('input[name^=local][value=all]').trigger('click');
+		}
+	});
+
+	// 검색 지역(체크박스)
+	$('#frm_prd_search input[name^=local]').on('click', function() {
+		if ($(this).val() == 'all') {
+			if ($(this).prop('checked')) {
+				$('input[name^=local]').each(function() {
+					$(this).parent().removeClass('on');
+					$(this).prop('checked', false);
+				});
+				$(this).parent().addClass('on');
+				$(this).prop('checked', true);
+			} else {
+				$('input[name^=local]').each(function() {
+					$(this).parent().removeClass('on');
+					$(this).prop('checked', false);
+				});
+			}
+		} else {
+			if ($('input[name^=local]').length == $('input[name^=local]:checked').length + 1 && !$('input[name^=local]:first').prop('checked')) {
+				$('#frm_prd_search input[name^=local]:first').trigger('click');
+				return false;
+			}
+			$('input[name^=local]:first').parent().removeClass('on');
+			$('input[name^=local]:first').prop('checked', false);
+		}
+		set_local();
+	});
+
+	search_options = jQuery.extend({}, datepicker_options);
+
+	// 180 - 120 으로 감소처리 요청자 앨리스 by kalljin
+	var AC_DIFF = 120;
+	search_options['maxDate'] = (new Date()).getDiffDate(AC_DIFF);	// 120일 까지만 조회 
+	search_options['defaultDate'] = g_defaultdate;
+	search_options['onSelect'] = function(date) {
+		var tmp_date = new Date();
+		tmp_date.setStringDate(date);
+		tmp_date = tmp_date.getDiffDate(1);
+		$("#ac_edate").datepicker("option", "minDate", tmp_date);
+
+		// 최대 7박을 넘기면 안됨
+		// 7박을 넘기면 요금계산이 안됨
+		tmp_date = tmp_date.getDiffDate(6);
+		$("#ac_edate").datepicker("option", "maxDate", tmp_date);
+
+		//$("#ac_edate").datepicker("show");
+	}
+	$("#frm_prd_search #ac_sdate").datepicker(search_options);
+
+	if (ac_sdate) {
+		var tmp_date = new Date();
+		tmp_date.setStringDate(ac_sdate);
+		search_options['defaultDate'] = (ac_edate) ? ac_edate : tmp_date.getDiffDate(1) ;
+		search_options['minDate'] = tmp_date.getDiffDate(1);	// 360일 까지만 조회 151230 by lalala2570
+		search_options['maxDate'] = tmp_date.getDiffDate(7);	// 360일 까지만 조회 151230 by lalala2570
+	} else {
+		search_options['maxDate'] = (new Date()).getDiffDate(7);	// 360일 까지만 조회 151230 by lalala2570
+	}
+	search_options['onSelect'] = function(date) {}
+	$("#frm_prd_search #ac_edate").datepicker(search_options);
+
+
+	// 검색 숙박지
+	$('#slt_type').on('click', function() {
+		if ($('#room_type').css('display') == 'none') {
+			$('#room_type').show();
+		} else {
+			$('#room_type').hide();
+		}
+		return false;
+	});
+
+	// 검색 숙소유형
+	$('#frm_prd_search input[name^=type]').on('click', function() {
+		if ($(this).val() == 'all') {
+			if ($(this).prop('checked')) {
+				$('input[name^=type]').each(function() {
+					$(this).parent().removeClass('on');
+					$(this).prop('checked', false);
+				});
+				$(this).parent().addClass('on');
+				$(this).prop('checked', true);
+			} else {
+				$('input[name^=type]').each(function() {
+					$(this).parent().removeClass('on');
+					$(this).prop('checked', false);
+				});
+			}
+		} else {
+			if ($('input[name^=type]').length == $('input[name^=type]:checked').length + 1 && !$('input[name^=type]:first').prop('checked')) {
+				$('#frm_prd_search input[name^=type]:first').trigger('click');
+				return false;
+			}
+			$('input[name^=type]:first').parent().removeClass('on');
+			$('input[name^=type]:first').prop('checked', false);
+		}
+		set_type();
+	});
+
+	// 검색 숙소유형 레이어 창 닫기
+	$('#btn_room_type_close').on('click', function() {
+		$('#room_type').hide();
+		return false;
+	});
+
+	// 재검색 버튼 클릭 이벤트
+	$('#btn_re_search').on('click', function() {
+		$("#div_small_search").slideUp(slide_speed);
+		$("#frm_prd_search").slideDown(slide_speed);
+
+		return false;
+	});
+
+	/**
+	 * 검색버튼 클릭 이벤트
+	 */
+	$('#btn_prd_search').on('click', function() {
+		$('#frm_prd_search').submit();
+		return false;
+	});
+
+	$('#frm_prd_search').validate({
+		submitHandler: function(form) {
+			try {
+				// 메인페이지에서 검색페이지로 이동
+				if (isList == '') {
+					$('#frm_prd_search').attr('action', '/item/ld_list.html');
+					return true;
+				} else {
+					
+					// 키워드7 검색 스크립트 호출
+					var searchstr = $('#frm_prd_search input[name=searchstr]').val();
+					if (searchstr != '' && typeof searchstr != 'undefined' && typeof keyword7_script == 'function') {  
+						keyword7_script('search',{searchTerm:searchstr});  
+					}
+					Loader.show();
+					set_search_pannel();
+					$.getJSON('ajax/json.ld_list.php', $('#frm_prd_search').serialize(), function(json) {
+						try {
+							if (json.sql != '') {
+								if (g_isinner) console.log(json.sql);
+								if (g_isinner) console.log(json.list);
+							}
+
+							$('#dummy_prd_list > li').remove();
+							if (json.result != '0000') {
+								if (json.message)	throw json.message;
+								else				throw '알 수 없는 오류 입니다.';
+							} else {
+								Loader.hide()
+
+								// qrcode image 가 있을때만 처리함
+								if ($("#qrImage").length > 0 && false) {
+									$url = location.origin+location.pathname+'?'+$('#frm_prd_search').serialize();
+									qr($url, '#qrImage');
+								}
+
+								if (json.list.length == 0) {
+									showNoResult();
+								} else {
+									showResult()
+									$('#dummy_result_count').html(json.list.length + '개의 검색결과')
+
+/*
+									for (var i in json.list) {
+										var row = json.list[i];
+										var div_event = (row.line_event != '') ? '<a href="#none" class="badge event dummy_event_click">이벤트</a><div class="event-layer">'+row.line_event+'</div>' : '' ;
+										var req = (row.isReal) ?'' : '<span class="badge_ad"><i class="ico_comm ico_headset"></i>상담예약</span>';
+
+										$li = $('<li />')
+											.attr('data-type', row.type)
+											.attr('sort-price', row.view_price)
+											.attr('sort-popular', row.popular)
+											.attr('sort-name', row.prd_name)
+											.html('<div class="wrap"><a href="'+row.view_url+'"><img src="'+row.image+'" alt="'+row.prd_name+'" class="thumb"></a><dl><dt>'+req+'<a href="'+row.view_url+'"><strong>'+row.prd_name+'</strong></a></dt><dd><small>'+row.str_region+'</small> <a href="#none" class="badge map"><i class="ico map"></i> 지도</a></dd><dd class="exp">'+row.comment+'</dd><dd class="price"><span class="desc_item"><em class="per_sale"><span class="num_per">'+row.per+'</span>%</em><span class="txt_price">'+number_format(row.org_price)+'원</span><strong>'+number_format(row.view_price)+'</strong>원</span></dd></dl>'+div_event+'</div>')
+										$('#dummy_prd_list').append($li);
+									}
+*/
+
+									for (var i in json.list) {
+										var row = json.list[i];
+                                        // 쿠폰라벨 추가 200723 by hclee
+                                        var label_coupon = (row.is_coupon ? '<span class="badge-coupon-list"><span class="ico_comm ico-coupon"></span>쿠폰</span>':'');
+										if (row.isReal) {
+											$dl = $('<dl />').append($('<dt />').html('<span class="badge_immrsv"><i class="ico_comm ico_monitor"></i>즉시예약</span>'+label_coupon+'<a href="'+row.view_url+'"><strong>'+row.prd_name+'</strong></a>'))
+										} else {
+											$dl = $('<dl />').append($('<dt />').html('<span class="badge_ad"><i class="ico_comm ico_headset"></i>상담예약</span>'+label_coupon+'<a href="'+row.view_url+'"><strong>'+row.prd_name+'</strong></a>'))
+										}
+										$dl.append($('<dd />').html('<small>'+row.str_region+'</small> <a href="#none" class="badge map btn_map_search" jc-prd-code="AC" jc-prd-no="'+row.prd_no+'"><i class="ico map"></i> 지도</a>'))
+											.append($('<dd />').addClass('exp').html(row.comment))
+											.append($('<dd />').addClass('price').html('<span class="desc_item"><em class="per_sale"><span class="num_per">'+row.per+'</span>%</em><span class="txt_price">'+number_format(row.org_price)+'원</span><strong>'+number_format(row.view_price)+'</strong>원 <small>(세금, 봉사료포함)</small></span>'))
+
+										var sp_sale = '';//(row.rate.length>0) ? '<span class="sp_sale">' + row.rate[0].title[1] + '</span>' : '' ;
+
+										$div = $('<div />')
+											.addClass('wrap')
+											.append('<a href="'+row.view_url+'"><img src="'+row.image+'" alt="'+row.prd_name+'" class="thumb"></a>' + sp_sale)
+											.append($dl)
+
+										if (row.line_event != '')
+											$div.append('<a href="#none" class="badge event dummy_event_click">이벤트</a><div class="event-layer">'+row.line_event+'</div>')
+											
+										if(row.is_kto){
+											$div.append('<span class="event_ad event_kto"><img src="/images/ico_kto.png" alt="숙박대전"></span>');
+										}
+
+										$li = $('<li />')
+											.attr('data-type', row.type)
+											.attr('sort-rsv', row.rsv)
+											.attr('sort-price', row.view_price)
+											.attr('sort-popular', row.popular)
+											.attr('sort-name', row.prd_name)
+											.attr('filter-local', row.local)
+											.attr('filter-rsv-type', row.isReal)
+											.attr('filter-equip', row.equip)
+											.attr('filter-view', row.view)
+											.attr('filter-theme', row.theme)
+											.attr('latitude', row.latitude)
+											.attr('longitude', row.longitude)
+											.append($div);
+
+										if (row.rate.length>0) {
+											$span = $('<span class="sp_price"/>');
+											$span.append($('<p><span><em>제주닷컴 판매가</em></span><strong>'+LA_numberFormat(row.sel_price)+'원</strong></p>'));
+											for (var j in row.rate) {
+												var rate = row.rate[j];
+												var rate_price = 0;
+												var rate_title = '';
+												var add_class = '';
+												if (rate.view_type=='1') {
+													rate_price = rate.dc_price;
+													rate_title = rate.title[0];
+													add_class = '';
+												} else {
+													rate_price = rate.sel_price;
+													rate_title = rate.title[1];
+												}
+												$span.append($('<p><span><em>'+rate_title+'</em></span><strong>'+LA_numberFormat(rate_price)+'원</strong></p>'));
+											}
+											$li.find('.price').append($span);
+										}
+
+										$('#dummy_prd_list').append($li);
+									}
+
+									$('.dummy_event_click').on('mouseover', function() {
+										$(this).next().show();
+									}).on('mouseout', function() {
+										$(this).next().hide();
+									});
+
+									try {
+										// ld_list.js
+										init_filter_map();
+										set_count(json.counts, json.price);
+										reset_filter();
+									} catch(ex) {
+										//console.log(ex);
+									}
+								}
+							}
+						} catch(ex) {
+							showNoResult();
+							alert(new String(ex));
+						}
+					}).fail(function(jqXHR, textStatus, error) {
+						if(error)	alert(new String(error));;
+					}).always(function() {
+						Loader.hide()
+					});
+					return false;
+				}
+				return false;
+			} catch(ex) {
+				$('#check_error').html(ex).show();
+				return false;
+			}
+		}
+	});
+
+	// 검색결과 없을때
+	function showNoResult() {
+		$('#div_prd_result').hide();
+		$('#div_no_result').show();
+		$('#div_prd_recommand').show();
+	}
+
+	// 검색결과 있을때
+	function showResult() {
+		$('#div_no_result').hide();
+		$('#div_prd_recommand').hide();
+		$('#div_prd_result').show();
+	}
+
+	// 검색 패널 설정
+	function set_search_pannel() {
+
+		var local = ''
+		// 전체 지역이라면
+		if ($('input[name^=local][value=all]').prop('checked')) {
+			local = '전체지역 선택';
+		} else {
+			local = $('input[name^=local]:checked').length + '개지역 선택';
+		}
+		$('#div_small_search .local').html('<strong>' + local + '</strong>');
+
+		var sdate = new Date();
+		sdate.setStringDate($('#ac_sdate').val());
+		var edate = new Date();
+		edate.setStringDate($('#ac_edate').val());
+
+		$('#div_small_search .date').html('<span>' + $('#ac_sdate').val() + '<br><small>' + sdate.getWeekDay() + '요일</small></span><span><img src="/images/img_section.gif" alt="왕복"></span><span>' + $('#ac_edate').val() + '<br><small>' + edate.getWeekDay() + '요일</small></span>');
+
+		var type = '';
+		if ($('input[name^=type][value=all]').prop('checked')) {
+			type = '전체';
+		} else {
+			$('input[name^=type]:checked').each(function() {
+				var str = $(this).parent().text();
+				type = type + ',' + str
+			});
+			type = type.replace(',', '');
+		}
+		$('#div_small_search .type:first').html('<strong>' + type + '</strong><br><small>숙소형태</small>');
+
+		var searchstr = ($('#searchstr').val()) ? $('#searchstr').val() : '없음' ;
+		$('#div_small_search .type').eq(1).html('<strong>' + searchstr + '</strong><br><small>숙소명</small>');
+
+		$("#div_small_search").slideDown(slide_speed);
+		$("#frm_prd_search").slideUp(slide_speed);
+		return false;
+	}
+
+	// 검색 다중선택된 지역 표시하기
+	function set_local() {
+		set_select_div('local', '#slt_search_map', '제주도 전체', '제주도 전체', 1);
+		
+		if ($('#frm_prd_search input[name^=local]:first').prop('checked')) {
+			$('#check_map_all').prop('checked',true).parent().addClass('on');
+		}
+		
+	}
+
+	// 검색 다중선택된 숙소유형 표시하기
+	function set_type() {
+		set_select_div('type', '#slt_type', '숙소유형 전체', '숙소유형 전체', 1);
+	}
+
+	// 검색 숙박지 체크박스 상태에따라 지도 선택유무 표시하기
+	function set_map() {
+		// 검색에서 지도를 이용한 지역
+		$('#area_select polygon').css('cursor','pointer').each(function() {
+			if ($('input[name^=local][value='+$(this).attr('data-value')+']').prop('checked') || $('input[name^=local][value=all]').prop('checked')) {
+				$(this).attr('fill', 'url(#area_on)');
+			} else {
+				$(this).attr('fill', 'url(#area_off)');
+			}
+		});
+	}
+
+	set_type();
+	set_local();
+
+	if (isList) {
+		set_map();
+		$('#btn_prd_search').trigger('click');
+	}
+});
+</script>
+</head>
+<body>
+<div class="layer-cont">
+<!-- svg 영역 start -->
+<div id="jejumap" class="hide_ie8_under" style="width:451px; height:317px; margin-bottom:20px;">
+<!-- svg 삽입 -->
+<!-- tpl : template/part/svg_map_1.html -->
+
+<!-- 상단 검색영역에 들어가는 지도 -->
+
+<!-- svg 삽입 -->
+<div id="area_select" style="width:451px; height:317px; background:url(/images/item/map/bg_map_jeju.png) no-repeat;">
+	<svg version="1.1" width="451" height="317">
+		<!-- 제주시-->
+		<polygon points="149,83,159,92,170,91,174,103,176,128,184,141,197,144,214,157,224,155,237,148,245,143,264,132,278,117,273,100,268,82,268,70,254,57,239,44,204,47,121,54,117,69" fill="url(#area_off)" data-value="1" ss-data-value="SSA1" style="cursor: pointer;"></polygon>
+
+		<!-- 제주시 동부-->
+		<polygon points="258,53,262,62,272,68,272,86,280,113,275,122,262,136,248,142,234,149,247,150,272,138,284,134,296,131,300,127,309,119,321,115,330,119,348,110,363,106,375,99,384,97,394,86,443,83,440,48,362,23,286,27" fill="url(#area_off)" data-value="11" ss-data-value="SSA3" style="cursor: pointer;"></polygon>
+
+		<!-- 제주시 서부-->
+		<polygon points="28,214,54,201,75,211,77,204,98,190,106,183,118,178,126,176,136,173,161,175,167,160,182,156,202,154,211,155,206,145,191,145,177,133,177,119,172,95,169,90,162,92,155,82,114,74,87,89,49,122,9,178,15,196" fill="url(#area_off)" data-value="12" ss-data-value="SSA6" style="cursor: pointer;"></polygon>
+
+		<!-- 서귀포시-->
+		<polygon points="267,231,261,212,252,197,247,180,225,155,214,156,211,156,197,157,192,159,186,158,178,158,166,160,164,172,158,185,157,190,151,194,147,207,142,204,140,199,136,204,139,217,132,243,124,256,185,275,248,256" fill="url(#area_off)" data-value="4" ss-data-value="SSA2" style="cursor: pointer;"></polygon>
+
+		<!-- 서귀포시 동부-->
+		<polygon points="221,152,243,169,250,183,265,213,270,234,325,236,367,217,413,151,440,122,432,107,421,93,411,88,395,88,385,97,376,101,365,107,351,110,341,115,328,123,320,117,305,124,296,133,283,135,264,144,246,151" fill="url(#area_off)" data-value="41" ss-data-value="SSA4" style="cursor: pointer;"></polygon>
+
+		<!-- 서귀포시 서부-->
+		<polygon points="116,309,124,252,133,240,136,221,136,202,140,197,147,202,150,193,157,188,162,176,148,177,132,173,125,178,116,178,111,184,105,185,93,196,75,205,74,211,49,203,38,209,36,214,59,257,59,278,83,290,77,302,93,313" fill="url(#area_off)" data-value="42" ss-data-value="SSA5" style="cursor: pointer;"></polygon>
+
+		<defs>
+			<pattern id="area_off" patternUnits="userSpaceOnUse" x="0" y="0" width="451" height="317">
+				<image xlink:href="https://www.jeju.com/images/item/map/bg_map_jeju.png" width="451" height="317"></image>
+			</pattern>
+			<pattern id="area_on" patternUnits="userSpaceOnUse" x="0" y="0" width="451" height="317">
+				<image xlink:href="https://www.jeju.com/images/item/map/img_map_jeju_07.png" width="451" height="317"></image>
+			</pattern>
+		</defs>
+	</svg>
+</div>
+<label class="lab_choice check-all on">
+	<input type="checkbox" id="check_map_all" class="screen_out"><span class="ico_comm ico_chkbox"></span>전체선택
+</label>
+</div>
+<!-- svg 영역 end -->
+<!-- ie8이하일 경우 -->
+<div class="pd20 show_ie8_under" style="display: none;">
+	<ul class="group_choice">
+		<li><label class="lab_choice"><input type="checkbox" id="local[]_0" name="local[]" class="screen_out" value="all" checked="checked"><span class="ico_comm ico_chkbox"></span>전체</label></li>
+		<li><label class="lab_choice"><input type="checkbox" id="local[]_1" name="local[]" class="screen_out" value="1"><span class="ico_comm ico_chkbox"></span>제주시</label></li>
+		<li><label class="lab_choice"><input type="checkbox" id="local[]_2" name="local[]" class="screen_out" value="11"><span class="ico_comm ico_chkbox"></span>제주시 동부</label></li>
+		<li><label class="lab_choice"><input type="checkbox" id="local[]_3" name="local[]" class="screen_out" value="12"><span class="ico_comm ico_chkbox"></span>제주시 서부</label></li>
+		<li><label class="lab_choice"><input type="checkbox" id="local[]_4" name="local[]" class="screen_out" value="4"><span class="ico_comm ico_chkbox"></span>중문/서귀포</label></li>
+		<li><label class="lab_choice"><input type="checkbox" id="local[]_5" name="local[]" class="screen_out" value="41"><span class="ico_comm ico_chkbox"></span>서귀포시 동부</label></li>
+		<li><label class="lab_choice"><input type="checkbox" id="local[]_6" name="local[]" class="screen_out" value="42"><span class="ico_comm ico_chkbox"></span>서귀포시 서부</label></li>
+	</ul>
+</div> 
+<p class="pd10 align-center">지도에서 검색 지역을 선택하고 확인 버튼을 클릭해주세요. (다중선택 가능)</p>
+<div class="btn-group">
+	<a href="#none" class="btn_comm" id="btn_search_map_close">확인</a>
+</div>
+</div>
+</body>
+</html>

@@ -12,7 +12,7 @@ public class CartListSvc {
 		Connection conn = getConnection();
 		OrderDao orderDao = OrderDao.getInstance();
 		orderDao.setConnection(conn);
-		cartList = orderDao.getCartList(miid);
+		cartList = orderDao.getCartList(miid, "");
 		close(conn);
 
 		return cartList;

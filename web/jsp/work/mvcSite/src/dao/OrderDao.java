@@ -20,8 +20,8 @@ public class OrderDao {
 		this.conn = conn;
 	}
 
-	public ArrayList<CartInfo> getCartList(String miid) {
-	// 장바구니에서 보여줄 특정 회원의 장바구니 목록을 리턴하는 메소드
+	public ArrayList<CartInfo> getCartList(String miid, String where) {
+	// 장바구니에서 보여줄 특정 회원의 장바구니 목록 또는 결제폼에서 보여줄 결제할 상품 목록을 리턴하는 메소드
 		ArrayList<CartInfo> cartList = new ArrayList<CartInfo>();
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -31,7 +31,8 @@ public class OrderDao {
 			String sql = "select a.*, b.pi_name, b.pi_img1, c.b_name, b.pi_option, " + 
 			"b.pi_price, b.pi_stock, b.pi_discount from t_order_cart a, t_product_info b, t_brand c " + 
 			"where a.pi_id = b.pi_id and b.b_id = c.b_id and b.pi_isview = 'y' and " + 
-			"(b.pi_stock >= a.oc_cnt or b.pi_stock = -1) and a.mi_id = '" + miid + "'";
+			"(b.pi_stock >= a.oc_cnt or b.pi_stock = -1) and a.mi_id = '" + miid + 
+			"' " + where + " order by a.pi_id";
 			System.out.println(sql);
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
@@ -121,7 +122,13 @@ public class OrderDao {
 				// 현재 회원의 장바구니 속에 동일한 상품의 동일한 옵션이 있는지 검사할 쿼리
 				rs = stmt.executeQuery(sql);
 				if (rs.next()) {	// 동일한 상품의 동일한 옵션이 있으면
-					
+					sql = "update t_order_cart set oc_option = '" + op + 
+						"', oc_cnt = oc_cnt + " + rs.getInt("oc_cnt") + 
+						" where oc_idx = " + idx;
+					// 변경하는 상품의 개수를 기존 상품의 개수와 합침
+
+					cartDelete(" where mi_id = '" + uid + "' and oc_idx = " + rs.getInt("oc_idx"));
+					// 기존에 있던 동일상품 동일옵션의 카트 레코드를 삭제
 				} else {	// 처음 선택되는 옵션이면
 					sql = "update t_order_cart set oc_option = '" + 
 						op + "' where oc_idx = " + idx;
@@ -134,6 +141,26 @@ public class OrderDao {
 			e.printStackTrace();
 		} finally {
 			if (kind.equals("opt"))	close(rs);	// 옵션변경일 경우에만 rs를 닫아줌
+			close(stmt);
+		}
+
+		return result;
+	}
+
+	public int cartDelete(String where) {
+	// 장바구니내 상품(들)을 삭제하는 메소드
+		Statement stmt = null;
+		int result = 0;
+
+		try {
+			stmt = conn.createStatement();
+			String sql = "delete from t_order_cart " + where;
+			result = stmt.executeUpdate(sql);
+
+		} catch(Exception e) {
+			System.out.println("cartDelete() 메소드 오류");
+			e.printStackTrace();
+		} finally {
 			close(stmt);
 		}
 

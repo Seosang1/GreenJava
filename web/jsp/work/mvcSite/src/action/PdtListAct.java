@@ -41,6 +41,7 @@ public class PdtListAct implements Action {
 		if (!isEmpty(eprice))	where += " and a.pi_price <= '" + eprice + "' ";
 		else	eprice = "";
 
+		
 		// 정렬조건(판매량-내, 가격-오내, 등록-내(기본), 상품명-오, 리뷰-내) 쿼리스트링
 		String ord = request.getParameter("ord");
 		if (ord == null || ord.equals(""))	ord = "idd";	// 등록 역순으로 정렬이 기본값

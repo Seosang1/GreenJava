@@ -1,0 +1,30 @@
+public int cartInsert(CartInfo cart) {
+      // 장바구니에 특정 상품을 등록하ㅡㄴ 메소드
+         int result = 0;
+         Statement stmt = null;
+         ResultSet rs = null;
+         try {
+            stmt = conn.createStatement();
+            String sql = "select a.oc_idx, a.oc_cnt, b.pi_stock from t_order_cart a, t_product_info b where a.pi_id = b.pi_id and a.mi_id  = '"
+                           + cart.getMi_id() + "' and a.pi_id = '" + cart.getPi_id() + "'and a.oc_option = '" + cart.getOc_option() + "'";
+            System.out.println("cartInsert" + sql);
+            rs = stmt.executeQuery(sql);
+            if(rs.next()) {
+               // 현재 추가하려는 상품과 동일한 상품이 이미 장바구니에 있을 경우
+               sql = "update t_order_cart set oc_cnt = " + cart.getOc_cnt() + " where oc_idx = " + rs.getInt("oc_idx");
+               if (rs.getInt("pi_stock") > 0)   // 재고가 무제한(-1)이 아니면
+               sql += " and (oc_cnt +" + cart.getOc_cnt() + ") <= " + rs.getInt("pi_stock");
+            }else {
+               sql = "insert into t_order_cart (mi_id, pi_id, oc_option, oc_cnt)" + "values ('" + cart.getMi_id() + "' , '" + cart.getPi_id() + "', '" + cart.getOc_option() + "', " + cart.getOc_cnt() + ")";
+            }
+
+            System.out.println("cartInsert : update or insert : " + sql);
+            result = stmt.executeUpdate(sql);
+         }catch(Exception e) {
+               System.out.println("cartInsert() 메소드 오류");
+            e.printStackTrace();
+         }finally {
+            close(rs);   close(stmt);
+         }
+         return result;
+   }
