@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% 
+request.setCharacterEncoding("utf-8");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,10 +26,10 @@ h1{
     margin: 0;
 }
 
-/* �젅�씠�븘�썐 �쇅怨� �꼫鍮� 400px �젣�븳*/
+/* 레이아웃 외곽 너비 400px 제한*/
 .wrap{
     max-width: 480px;
-    margin: 0 auto; /* �솕硫� 媛��슫�뜲濡� */
+    margin: 0 auto; /* 화면 가운데로 */
     background-color: #fff;
     height: 100%;
     padding: 20px;
@@ -65,7 +68,7 @@ h1{
     z-index: 10;
     width: 60px;
     height: 60px;
-    background-image: url(starrate.png);
+    background-image: url(./img/starrate.png);
     background-repeat: no-repeat;
     background-size: 60px 60px;
     cursor: pointer;
@@ -114,12 +117,13 @@ document.addEventListener('DOMContentLoaded', function(){
 
     //상품평 작성 글자수 초과 체크 이벤트 리스너
     document.querySelector('.review_textarea').addEventListener('keydown',function(){
-        //리뷰 400자 초과 안되게 자동 자름
+        //리뷰 50자 초과 안되게 자동 자름
         let review = document.querySelector('.review_textarea');
-        let lengthCheckEx = /^.{400,}$/;
+        let lengthCheckEx = /^.{50,}$/;
         if(lengthCheckEx.test(review.value)){
-            //400자 초과 컷
-            review.value = review.value.substr(0,400);
+            //50자 초과 컷
+            rating.showMessage('reviewOver')
+            review.value = review.value.substr(0,50);
         }
     });
 
@@ -170,6 +174,16 @@ Rating.prototype.showMessage = function(type){//경고메시지 표시
                 document.querySelector('.review_rating .warning_msg').style.display = 'none';
             },1000);            
             break;
+            
+        case 'reviewOver':
+            //글자 초과 안내메시지 표시
+            document.querySelector('#review_over .warning_msg').style.display = 'block';
+            //지정된 시간 후 안내 메시지 감춤
+            setTimeout(function(){
+                document.querySelector('.review_over .warning_msg').style.display = 'none';
+            },1000);    
+            break;
+            
         case 'review':
             //안내메시지 표시
             document.querySelector('.review_contents .warning_msg').style.display = 'block';
@@ -178,6 +192,7 @@ Rating.prototype.showMessage = function(type){//경고메시지 표시
                 document.querySelector('.review_contents .warning_msg').style.display = 'none';
             },1000);    
             break;
+
     }
 }
 
@@ -208,7 +223,10 @@ let rating = new Rating();//별점 인스턴스 생성
                     <label for="rating5"></label>
                 </div>
             </div>
-            <div class="review_contents">
+            <div id="review_over">
+                <div class="warning_msg">리뷰는 50자까지만 작성 가능합니다.</div>
+            </div>
+            <div class="review_contents"> 
                 <div class="warning_msg">5자 이상의 리뷰 내용을 작성해 주세요.</div>
                 <textarea rows="10" class="review_textarea"></textarea>
             </div>   

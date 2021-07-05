@@ -16,10 +16,10 @@ h1{
     margin: 0;
 }
 
-/* ë ˆì´ì•„ì›ƒ ì™¸ê³½ ë„ˆë¹„ 400px ì œí•œ*/
+/* ·¹ÀÌ¾Æ¿ô ¿Ü°û ³Êºñ 400px Á¦ÇÑ*/
 .wrap{
     max-width: 480px;
-    margin: 0 auto; /* í™”ë©´ ê°€ìš´ë°ë¡œ */
+    margin: 0 auto; /* È­¸é °¡¿îµ¥·Î */
     background-color: #fff;
     height: 100%;
     padding: 20px;
