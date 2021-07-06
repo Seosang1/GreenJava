@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[3.9.17.202106211030-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[true]]></enableImports>
+	<configs>
+		<config>src/main/resources/mappers/testMapper.xml</config>
+		<config>src/main/java/com/SpringMVC/project/webapp/WEB-INF/spring/applicationContext.xml</config>
+	</configs>
+	<autoconfigs>
+		<config>src/main/java/com/SpringMVC/project/webapp/WEB-INF/spring/root-context.xml</config>
+		<config>src/main/java/com/SpringMVC/project/webapp/WEB-INF/spring/appServlet/servlet-context.xml</config>
+	</autoconfigs>
+	<configSets>
+	</configSets>
+</beansProjectDescription>
