@@ -1,0 +1,18 @@
+/*
+layout.css: 사이트 레이아웃용 css
+*/
+
+
+
+#header{
+		position:relative; margin:auto; /*auto = 양옆의 너비를 같게 만드는 속성*/
+		width:1180px; height:180px; 
+		}
+#contents{
+		position:relative; margin:auto;
+		width:1180px; height:960px; background-color:#f1f1f1;
+		}
+#footer{
+		position:absolute;;margin-left:225px; /*auto = 양옆의 너비를 같게 만드는 속성*/
+		width:1180px; height:175px; 
+		}
