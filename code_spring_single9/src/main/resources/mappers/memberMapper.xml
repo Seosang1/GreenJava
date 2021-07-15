@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+	<!-- 로그인 -->
+	<select id="login"  resultType="kr.co.web.model.Member.MemberDto">
+		SELECT *
+		FROM atworks_user
+		WHERE u_id=#{u_id}
+	</select>
+	
+	<!-- 로그아웃 -->
+	
+	<!-- 회원가입 -->
+	<insert id="signup">
+		insert into atworks_user(u_id, u_pwd, u_name, u_tel, u_birth, u_wedding, u_p_birth, u_email,
+		u_address, u_start_date, u_code)
+		values(
+		#{u_id}, #{u_pwd}, #{u_name},
+		#{u_tel}, #{u_birth}, #{u_wedding},
+		#{u_p_birth}, #{u_email}, #{u_address},
+		#{u_start_date}, 'c')
+	</insert>
+	
+	
+	<!-- 이메일 인증 -->
+	
+</mapper>
