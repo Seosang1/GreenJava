@@ -1,7 +1,9 @@
 package kr.co.web.model.board;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -12,33 +14,42 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import kr.co.web.Pagination;
 
 @Controller
+@RequestMapping("/board")
 public class BoardController {
 	@Autowired
 	private SqlSession sqlSession;
-	
+
 	@Inject
 	private BoardBiz boardBiz;
 
-	@RequestMapping(value = "/board/qnaList", method = RequestMethod.GET)
-	public String getBoardList(Model model) throws Exception {
+	@RequestMapping(value = "qnaList", method = RequestMethod.GET)
+	public String getBoardList(Model model
+			,@RequestParam(required = false, defaultValue = "1") int page
+			,@RequestParam(required = false, defaultValue = "1") int range
+			) throws Exception {
 
-		model.addAttribute("boardList", boardBiz.getBoardList());
+		//전체 게시글 개수
+		int listCnt = boardBiz.getBoardListCnt();
 
-		return "/jsp/board/qnaList"; 
+		// Pagination 객체생성
+		Pagination pagination = new Pagination();
+
+		pagination.pageInfo(page, range, listCnt);
+
+
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("boardList", boardBiz.getBoardList(pagination));
+		return "/jsp/board/qnaList";
 	}
-	
-	@RequestMapping(value = "/board/writeQna")
-	public String writeQna(Model model, HttpSession session, HttpServletResponse response) throws IOException {
+
+	@RequestMapping(value = "writeQna")
+	public String writeQna(@ModelAttribute("boardDto") BoardDto boardDto, Model model, HttpSession session, HttpServletResponse response) throws IOException {
 		// 비 로그인 시 하라고 시킴
 		if(session.getAttribute("u_id") != null) { // == 로 바꿔야 작동
 			System.out.println("writeQna boardController 로그인세션 없음");
@@ -51,25 +62,51 @@ public class BoardController {
 		}
 		return "jsp/board/writeQna";
 	}
-	
-	@RequestMapping(value ="/writeQnaAct", method = RequestMethod.POST)
 
-	public String Write(@ModelAttribute("BoardDto") BoardDto boardDto, RedirectAttributes rttr) throws Exception {
+	@RequestMapping(value ="writeQnaAct", method = RequestMethod.POST)
+	public String Write(@ModelAttribute("BoardDto") BoardDto boardDto, @RequestParam("mode") String mode, RedirectAttributes rttr) throws Exception {
+		if (mode.equals("edit")) {
+			boardBiz.updateQna(boardDto);
+			System.out.println("수정");
+		} else {
+			boardBiz.insertBoard(boardDto);
+			System.out.println("새글작성");
+		}
+		rttr.addFlashAttribute("result", "update success");
 
-		boardBiz.insertBoard(boardDto);
-
-		return "redirect:/jsp/board/qnaList";
+		return "redirect:/board/qnaList";
 
 	}
- 
-	@RequestMapping(value = "qnaDetail")
-	public String qnaDetail(Model model) {
-		
+
+
+
+	@RequestMapping(value = "qnaDetail", method = RequestMethod.GET)
+	public String qndDetail(Model model, @RequestParam("seq") int seq) throws Exception {
+		model.addAttribute("qnaDetail", boardBiz.qnaDetail(seq));
+
 		return "jsp/board/qnaDetail";
 	}
-	@RequestMapping(value = "qnaView")
-	public String qnaView(Model model) {
-		
-		return "jsp/board/qnaView";
+
+	@RequestMapping(value = "updateQna", method = RequestMethod.GET)
+	public String updateQna(@RequestParam("seq") int seq, @RequestParam("mode") String mode, Model model) throws Exception {
+
+		model.addAttribute("qnaDetail", boardBiz.qnaDetail(seq));
+		model.addAttribute("mode", mode);
+		model.addAttribute("boardDto", new BoardDto());
+
+		return "jsp/board/writeQna";
+
 	}
+
+	@RequestMapping(value = "deleteQna", method = RequestMethod.GET)
+	public String deleteQna(RedirectAttributes rttr, @RequestParam("seq") int seq) throws Exception {
+		boardBiz.deleteQna(seq);
+		return "redirect:/board/qnaList";
+
+	}
+
+
+
+
+
 }

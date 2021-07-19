@@ -25,7 +25,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  -->
      <select id="selectList" resultType="kr.co.web.model.Product.productDto">
         SELECT *
-        FROM atworks_product
+        FROM atworks_product_new
      </select>
+     
+     <select id="productDetail" resultType="kr.co.web.model.Product.productDto">
+     	SELECT * 
+     	FROM atworks_product_new
+     </select>
+     
  
 </mapper>

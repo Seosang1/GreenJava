@@ -3,50 +3,45 @@
 
 <mapper namespace="kr.co.web.mappers.board.boardMapper">
 
-
+  
 <!-- 게시글목록 셀렉트 출력 -->
 <select  id="getBoardList" resultType="kr.co.web.model.board.BoardDto">
-	select * from atworks_qna
+	select * from atworks_qna order by seq desc LIMIT #{startList}, #{listSize}
+</select>
+
+<select id="getBoardListCnt" resultType="int">
+	SELECT count(*) as listCnt FROM atworks_qna
 </select> 
-  
 
 <!-- 조회수 증가 -->
-
-<update id="increase">
+<update id="viewCnt" parameterType="kr.co.web.model.board.BoardDto">
 	update atworks_qna set view_count = view_count + 1 where seq = #{seq}
 </update>
  
-<!-- 한 개의 글 -->
-
-<select id="view" resultType="kr.co.web.model.board.BoardDto">
-	select * from atworks_qna where seq =
-	#{seq}
-</select>
+ 
+<!-- 글 보기 -->
+<select id="qnaDetail" resultType="kr.co.web.model.board.BoardDto" parameterType="kr.co.web.model.board.BoardDto">
+	select * from atworks_qna 
+	where seq = #{seq}
+</select> 
  
 
 <!-- 글 작성 -->
-
 <insert id="insertBoard" parameterType="kr.co.web.model.board.BoardDto">
 	insert into atworks_qna(category, u_id, title, contents)
 	values(#{category} , #{u_id}, #{title}, #{contents})
-</insert>
-
-
+</insert> 
 
 <!-- 글 수정 -->
-
-<update id="update">
-	update atworks_qna set title = #{title}, contents =
-	#{contents}, u_id = #{u_id}
+<update id="updateQna"  parameterType="kr.co.web.model.board.BoardDto">
+	update atworks_qna set title = #{title}, contents = #{contents}, category = #{category}
 	where seq = #{seq}
 </update>
 
-
-
-<!-- 글 삭제 -->
-
-<delete id="delete">
+<delete id="deleteQna" parameterType="kr.co.web.model.board.BoardDto">
 	delete from atworks_qna where seq = #{seq}
 </delete>
+
+
 
 </mapper>

@@ -24,8 +24,19 @@
 *.tar.gz
 *.rar
 
+# Eclipse Core      
+.project
+
+# JDT-specific (Eclipse Java Development Tools)     
+.classpath
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> d57574f1c9f2fd63544cedc02e833d7169ec5082
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/java
 /target/
+/.metadata/

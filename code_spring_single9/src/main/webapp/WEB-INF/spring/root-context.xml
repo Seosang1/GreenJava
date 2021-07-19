@@ -43,10 +43,10 @@
     <!-- 구글,다음 등 사이트마다 메일 설정하는 포트가 다름 -->
     <!-- navermail설정 -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
-	 <property name="host" value="smtp.naver.com"/> <!-- 메이서버 호스트 -->
+	 <property name="host" value="smtp.daum.net"/> <!-- 메이서버 호스트 -->
 	 <property name="port" value="465"/> <!-- 메이서버 포트번호 -->
-	 <property name="username" value="자신의 이메일 아이디"/> <!-- 자신의 이메일 아이디 -->
-	 <property name="password" value="자신의 비밀번호"/> <!-- 자신의 비밀번호 -->
+	 <property name="username" value="owo_14@daum.net"/> <!-- 자신의 이메일 아이디 -->
+	 <property name="password" value="!14qudrl0913"/> <!-- 자신의 비밀번호 -->
 	   <!-- 보안연결 SSL과 관련된 설정 -->
 	 <property name="javaMailProperties">
 	  <props>

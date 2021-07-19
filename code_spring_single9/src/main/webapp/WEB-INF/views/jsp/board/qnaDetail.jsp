@@ -3,29 +3,28 @@
 <%@ include file="/WEB-INF/views/jsp/main/header.jsp"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<script>
-function init(){
-	$('#list').click(()=>{
-		location.href="${contextPath}/board/qnaList";
-	})
-}
-$(init);
 
+<script>  
 
-function changeView(address){
-	window.location.href=address;
-}
+$(document).on('click', '#btnList', function(){
+	location.href = "${pageContext.request.contextPath}/board/qnaList";
+});
 
-
-function updateQna2() {
+$(document).on('click', '#btnUpdate', function(){
+	var url = "${pageContext.request.contextPath}/board/updateQna";
+	url = url + "?seq="+${qnaDetail.seq};
+	url = url + "&mode=edit";
 	
-	location.href='/board/updateQna?seq='+ ${data.seq};
-}
+	location.href = url;
+});
 
-function deleteQna2() {
-	
-	location.href='/board/boardDelete?seq='+ ${data.seq};
-}
+$(document).on('click', '#btnDelete', function(){
+    var url = "${pageContext.request.contextPath}/board/deleteQna";
+    url = url + "?seq=" + ${qnaDetail.seq};
+		location.href = url;
+});
+
+
 
 </script>
 <style>
@@ -40,25 +39,28 @@ function deleteQna2() {
 <div class='container'>
 	<h3>Q&A</h3>
 	<div class='row' style='height: 30px'></div>
-	<form name="qna" method="POST" action="../board/writeQna"
-		id="submitQna">
 		<div class='row m-3'>
 			<label for="title" class='col-sm-2 col-form-label'>게시글번호</label>
 			<div class='col-sm-5'>
-				<p>${data.seq}</p>
+				<p>${qnaDetail.seq}</p>
 			</div>
 		</div>
 		<div class='row m-3'>
 			<label for="title" class='col-sm-2 col-form-label'>제목</label>
 			<div class='col-sm-5'>
-				<p>${data.title}</p>
+				<p>${qnaDetail.title}</p>
 			</div>
 		</div>
-		<div class='row' style='height: 15px'></div>
-		<div class='row'>
+		<div class='row m-3'>
+			<label for="view_count" class='col-sm-2 col-form-label'>조회수</label>
+			<div class='col-sm-5'>
+				<p>${qnaDetail.view_count}</p>
+			</div>
+		</div>
+		<div class='row m-3'>
 			<label for="contents" class='col-sm-2 col-form-label'>내용</label>
 			<div class='col-sm-5'>
-				<p>${data.contents}</p>
+				<p>${qnaDetail.contents}</p>
 			</div>
 		</div>
 		<div class='row'>
@@ -66,7 +68,7 @@ function deleteQna2() {
 			<div class='col-sm-5'>
 
 				<c:choose>
-					<c:when test="${data.response_yn eq '답변대기'}">
+					<c:when test="${qnaDetail.response_yn eq 'N'}">
 						<p>답변이 없습니다.</p>
 					</c:when>
 					<c:otherwise>
@@ -76,13 +78,16 @@ function deleteQna2() {
 
 			</div>
 		</div>
+		<div class="mb-3">
+				<label for="contents">댓글</label>
+				<input type="text" path="contents" id="reply" class="form-control"  />
+		</div>
+		<div class='row' style='height: 30px'></div>
 		<div class='row d-flex justify-content-end'>
-			<button type='button' class='btn btn-outline-secondary' id='list'>목록</button>
-			<button type='button' class='btn btn-outline-secondary'
-				id='updateQna' onclick="updateQna2()">수정</button>
-			<%-- <a href = "${contextPath}/board/updateQna?seq=${data.seq}">수정</a> --%>
-			<button type="button" class='btn btn-outline-secondary' 
-				id='deleteQna' onclick="deleteQna2()">삭제</button>
+			<button type='button' class='btn btn-outline-secondary' id='btnList'>목록</button>
+			<button type='button' class='btn btn-outline-secondary' id='btnUpdate'>수정</button>
+			<%-- <a href = "${contextPath}/board/updateQna?seq=${list.seq}">수정</a> --%>
+			<button type="button" class='btn btn-outline-secondary' id='btnDelete'>삭제</button>
 		</div>
 		<br> <br>
 		<div class='row' style='height: 30px'></div>
@@ -100,6 +105,5 @@ function deleteQna2() {
 			</c:if>
 		</div>
 		<div class='row' style="height: 300px"></div>
-	</form>
 </div>
 <%@ include file="/WEB-INF/views/jsp/main/footer.jsp"%>

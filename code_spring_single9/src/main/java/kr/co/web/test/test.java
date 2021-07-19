@@ -11,16 +11,16 @@ public class test {
       String url = "jdbc:mariadb://127.0.0.1:3306/test";
       String sql = "SELECT * FROM testTable";
 
-                // 클래스를 객체화, 드라이버를 로드
+                // �대���ㅻ�� 媛�泥댄��, ���쇱�대�瑜� 濡���
       Class.forName("org.mariadb.jdbc.Driver");
-                // 실행 도구 생성
-      Connection con = DriverManager.getConnection(url, "root", "7058");
-                // 연결 객체를 얻음
+                // �ㅽ�� ��援� ����
+      Connection con = DriverManager.getConnection(url, "root", "root");
+                // �곌껐 媛�泥대�� �살��
       Statement st = con.createStatement();
-                // 쿼리를 실행하여 결과 집합을 얻어온다.
+                // 荑쇰━瑜� �ㅽ������ 寃곌낵 吏��⑹�� �살�댁�⑤��.
       ResultSet rs = st.executeQuery(sql);
 
-      if(rs.next()) { // 다음 값을 가져옴 Bof ~ Eof
+      if(rs.next()) { // �ㅼ�� 媛��� 媛��몄�� Bof ~ Eof
          String ex1 = rs.getString("name");
          System.out.println(ex1);
          

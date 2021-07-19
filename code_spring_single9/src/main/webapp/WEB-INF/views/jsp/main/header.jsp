@@ -141,7 +141,7 @@
       <!-- 로고 이미지 -->
 <%--      <a href="main"><img alt="메인" src="${path}/images/kjh/logo.png">AT-TONG</a> --%>
 
-     <a href="main"><img alt="메인" src="/images/kjh/logo.png"></a>
+     <a href="../main"><img alt="메인" src="/images/kjh/logo.png"></a>
     
     </div>
     <div class="collapse navbar-collapse dropmenu" id="myNavbar">
