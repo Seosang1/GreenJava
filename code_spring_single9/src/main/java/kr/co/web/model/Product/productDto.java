@@ -17,12 +17,13 @@ public class productDto {
 	private String writer;
 	private MultipartFile photo;
 	private String title_photo;
+	private int likecnt;
 	public productDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public productDto(int seq, String category, String title, String contents, String price, String view_count,
-			String display_yn, Date create_date, String writer, MultipartFile photo, String title_photo) {
+			String display_yn, Date create_date, String writer, MultipartFile photo, String title_photo, int likecnt) {
 		super();
 		this.seq = seq;
 		this.category = category;
@@ -35,6 +36,7 @@ public class productDto {
 		this.writer = writer;
 		this.photo = photo;
 		this.title_photo = title_photo;
+		this.likecnt = likecnt;
 	}
 	public int getSeq() {
 		return seq;
@@ -102,10 +104,19 @@ public class productDto {
 	public void setTitle_photo(String title_photo) {
 		this.title_photo = title_photo;
 	}
+	public int getLikecnt() {
+		return likecnt;
+	}
+	public void setLikecnt(int likecnt) {
+		this.likecnt = likecnt;
+	}
 	@Override
 	public String toString() {
 		return "productDto [seq=" + seq + ", category=" + category + ", title=" + title + ", contents=" + contents
 				+ ", price=" + price + ", view_count=" + view_count + ", display_yn=" + display_yn + ", create_date="
-				+ create_date + ", writer=" + writer + ", photo=" + photo + ", title_photo=" + title_photo + "]";
+				+ create_date + ", writer=" + writer + ", photo=" + photo + ", title_photo=" + title_photo
+				+ ", likecnt=" + likecnt + "]";
 	}
+	
+	
 }

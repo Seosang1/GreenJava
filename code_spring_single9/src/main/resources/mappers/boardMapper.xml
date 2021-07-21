@@ -6,11 +6,42 @@
   
 <!-- 게시글목록 셀렉트 출력 -->
 <select  id="getBoardList" resultType="kr.co.web.model.board.BoardDto">
-	select * from atworks_qna order by seq desc LIMIT #{startList}, #{listSize}
+	select * from atworks_qna
+	<trim prefix="WHERE" prefixOverrides="AND|OR">
+		<if
+			test="searchType=='title' and keyword != null and keyword != '' ">
+			AND TITLE like CONCAT('%', #{keyword}, '%')
+		</if>
+		<if
+			test="searchType=='contents' and keyword != null and keyword != '' ">
+			AND contents like CONCAT('%', #{keyword}, '%')
+		</if>
+		<if
+			test="searchType=='u_id' and keyword != null and keyword != '' ">
+			AND u_id like CONCAT('%', #{keyword}, '%')
+		</if>
+	</trim>
+	ORDER BY seq desc
+	LIMIT #{startList}, #{listSize}
 </select>
 
 <select id="getBoardListCnt" resultType="int">
-	SELECT count(*) as listCnt FROM atworks_qna
+	SELECT count(*) as listCnt 
+	FROM atworks_qna
+	<trim prefix="WHERE" prefixOverrides="AND|OR">
+		<if
+			test="searchType=='title' and keyword != null and keyword != '' ">
+			AND TITLE like CONCAT('%', #{keyword}, '%')
+		</if>
+		<if
+			test="searchType=='content' and keyword != null and keyword != '' ">
+			AND CONTENTs like CONCAT('%', #{keyword}, '%')
+		</if>
+		<if
+			test="searchType=='reg_id' and keyword != null and keyword != '' ">
+			AND u_id like CONCAT('%', #{keyword}, '%')
+		</if>
+	</trim>
 </select> 
 
 <!-- 조회수 증가 -->
@@ -33,9 +64,9 @@
 </insert> 
 
 <!-- 글 수정 -->
-<update id="updateQna"  parameterType="kr.co.web.model.board.BoardDto">
+<update id="updateQna" parameterType="kr.co.web.model.board.BoardDto">
 	update atworks_qna set title = #{title}, contents = #{contents}, category = #{category}
-	where seq = #{seq}
+	where u_id = #{u_id}
 </update>
 
 <delete id="deleteQna" parameterType="kr.co.web.model.board.BoardDto">

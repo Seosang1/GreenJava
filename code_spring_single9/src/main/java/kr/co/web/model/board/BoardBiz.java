@@ -1,34 +1,32 @@
 package kr.co.web.model.board;
 
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import kr.co.web.Search;
 
-import org.springframework.stereotype.Service;
-
-import kr.co.web.Pagination;
-import kr.co.web.model.board.BoardDto; 
- 
 
 public interface BoardBiz {
-	
+
 	public void insertBoard(BoardDto boardDtO) throws Exception;
-	
-	
-	public List<BoardDto> getBoardList(Pagination pagination) throws Exception;
-	
+
+
+	public List<BoardDto> getBoardList(Search search) throws Exception;
+
 
 	public BoardDto qnaDetail(int seq) throws Exception;
-	
+
 	public void deleteQna(int seq) throws Exception;
 
-	public void updateQna(BoardDto boardDto) throws Exception; 
+	public void updateQna(BoardDto boardDto) throws Exception;
 
-	//총 게시글 개수 확인
-	public int getBoardListCnt() throws Exception;
+	public int getBoardListCnt(Search search) throws Exception;
 
- 
+	public List<BoardDto> getReplyList(int seq) throws Exception;
 
+	public int saveReply(BoardDto boardDto) throws Exception;
+
+	public int updateReply(BoardDto boardDto) throws Exception;
+
+	public int deleteReply(int rid) throws Exception;
 
 }

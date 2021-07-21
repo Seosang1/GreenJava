@@ -3,18 +3,37 @@
 <%@ include file="/WEB-INF/views/jsp/main/header.jsp"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<c:url var="getBoardListURL" value="/board/qnaList"></c:url>
 <script>
+
+
+$(document).on('click', '#btnSearch', function(e){
+	e.preventDefault();
+	var url = "${qnaList}";
+	url = url + "?searchType=" + $('#searchType').val();
+	url = url + "&keyword=" + $('#keyword').val();
+	location.href = url;
+	console.log(url);
+});	
+
+
+
+// 조회자 검사
 function viewDetail(seq){
 	var url = "${pageContext.request.contextPath}/board/qnaDetail";
-	var uid = <%=(String) session.getAttribute("u_id")%>;
+	var uid = "<%=(String)session.getAttribute("u_id")%>";
+	var admin = "<%=(String)session.getAttribute("u_code")%>";
 	
 	url = url + "?seq="+seq;
 	
-	if (uid == null /*&& uid.equals(${list.u_id}) && 어드민 아이디 확인 */) {
-		location.href = url;	
-		System.out.println(uid);
-	} else {
+	if (uid == null) {
 		alert("작성자만 조회 가능합니다.")
+		System.out.println(uid);
+	} else if (uid == "admin" && admin == "A" ) {
+		location.href = url;	
+		console.log("어드민 접속 " + uid + "code" + admin);
+	} else {
+		location.href = url;	
 	}
 }
  
@@ -27,7 +46,7 @@ $(document).on('click', '#writeQna', function(e){
 function fn_prev(page, range, rangeSize) {
 		var page = ((range - 2) * rangeSize) + 1;
 		var range = range - 1;
-		var url = "${pageContext.request.contextPath}/board/qnaList";
+		var url = "${qnaList}";
 		url = url + "?page=" + page;
 		url = url + "&range=" + range;
 
@@ -36,11 +55,9 @@ function fn_prev(page, range, rangeSize) {
 
  //페이지 번호 클릭
 function fn_pagination(page, range, rangeSize, searchType, keyword) {
-	var url = "${pageContext.request.contextPath}/board/qnaList";
+	var url = "${qnaList}";
 	url = url + "?page=" + page;
 	url = url + "&range=" + range;
-
-
 	location.href = url;	
 }
 
@@ -48,26 +65,25 @@ function fn_pagination(page, range, rangeSize, searchType, keyword) {
 function fn_next(page, range, rangeSize) {
 	var page = parseInt((range * rangeSize)) + 1;
 	var range = parseInt(range) + 1;
-	var url = "${pageContext.request.contextPath}/board/qnaList";
+	var url = "${qnaList}";
 	url = url + "?page=" + page;
-	url = url + "&range=" + range;
+	url = url + "&range=" + range; 
 	location.href = url;
 }
 
-$(document).ready(function() {
-	let result = '<c:out value="${result}"/>';
-	
-	chAlert(result);
-	console.log(result);
 
-	function chAlert(result) { 
-		if (result == "update success") {
-			alert("수정 성공");
-		} else {
-			("수정 실패");
-		}
-	}
-});
+// 검색기능
+$(document).on('click', '#btnSearch', function(e){
+	e.preventDefault();
+	var url = "${qnaList}"; 
+	url = url + "?searchType=" + $('#searchType').val();
+	url = url + "&keyword=" + $('#keyword').val();
+	location.href = url;
+	console.log(url);
+});	
+
+
+
 </script>
 
 <style>
@@ -87,6 +103,25 @@ $(document).ready(function() {
 			<button type='button' class='btn btn-outline-secondary' id='writeQna'>문의하기</button>
 		</div>
 	</div>
+	<!-- search{s} -->
+	<div class="form-group row justify-content-center" style="display:flex;">
+		<div class="w100" style="padding-right: 10px">
+			<select style="height:27px;" class=" form-control-sm" name="searchType" id="searchType">
+				<option value="title">제목</option>
+				<option value="contents">본문</option>
+				<option value="u_id">작성자</option>
+			</select>
+		</div>
+		<div class="w300" style="padding-right: 10px">
+			<input type="text" class=" form-control-sm"
+				name="keyword" id="keyword">
+		</div>
+		<div>
+			<button style="height:27px;" class="btn btn-sm btn-primary" name="btnSearch"
+				id="btnSearch">검색</button>
+		</div>
+	</div>
+	<!-- search{e} -->
 	<div class='row' style='height: 30px'></div>
 	<div class='row'>
 		<table border="1">
@@ -142,7 +177,8 @@ $(document).ready(function() {
 		<ul class="pagination">
 			<c:if test="${pagination.prev}">
 				<li class="page-item"><a class="page-link" href="#"
-					onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}')">Previous</a></li>
+					onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${search.searchType }', '${search.keyword }' )"></a>
+
 			</c:if>
 
 			<c:forEach begin="${pagination.startPage}"
@@ -150,17 +186,17 @@ $(document).ready(function() {
 				<li
 					class="page-item <c:out value="${pagination.page == idx ? 'active' : ''}"/> "><a
 					class="page-link" href="#"
-					onClick="fn_pagination('${idx}', '${pagination.range}', '${pagination.rangeSize}')">
-						${idx} </a></li>
+					onClick="fn_pagination('${idx}', '${pagination.range}', '${pagination.rangeSize}', '${search.searchType }', '${search.keyword }')">	${idx} </a></li>
 			</c:forEach>
 
 			<c:if test="${pagination.next}">
 				<li class="page-item"><a class="page-link" href="#"
-					onClick="fn_next('${pagination.range}', '${pagination.range}', '${pagination.rangeSize}')">Next</a></li>
+					onClick="fn_next('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${search.searchType }', '${search.keyword }')">Next</a></li>
 			</c:if>
 		</ul>
 	</div>
 	<!-- pagination{e} -->
+
 
 
 

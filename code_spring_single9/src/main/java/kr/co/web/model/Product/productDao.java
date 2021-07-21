@@ -8,5 +8,10 @@ public interface productDao {
 
 	public List<productDto> selectList();
 
+	public productDto productDetail(int seq);
+
+	public void insertForm(productDto dto) throws Exception;
+
+	
 
 }

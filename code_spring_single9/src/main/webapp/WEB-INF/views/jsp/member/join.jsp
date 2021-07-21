@@ -17,7 +17,7 @@
 	<br>
 	<br>
 	
-	<form method="POST" action="member/main2" id="joinForm">
+	<form method="POST" action="member/joinmember" id="joinForm">
 		<table id=basic-info border="1">
 			<div class="mb-4 row">
 				<label for="u_id" class="col-sm-2 col-form-label">아이디</label>
@@ -283,7 +283,7 @@ $(function(){
 	
 	function check_id() {
 		$.ajax({
-			url : "<%=request.getContextPath() %>/member/check_id",
+			url : "<%=request.getContextPath() %>/member/checkid",
 			type : "POST",
 			data : { u_id : $("#u_id").val() },
 			success : function(result) {

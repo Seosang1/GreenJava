@@ -13,13 +13,16 @@ public class MemberDaoImpl implements MemberDao {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public MemberDto login(MemberDto dto) {
+	public MemberDto userlogin(MemberDto dto) {
 		MemberDto user = null;
 		
 		try {
-			return sqlSession.selectOne(NAMESPACE+"login", dto);
+			return sqlSession.selectOne(NAMESPACE+"userlogin", dto);
+		
 		} catch (Exception e) {
+			System.out.println("error");
 			e.printStackTrace();
+			System.out.println("¼º°ø");
 		}
 		
 		return user;
@@ -32,9 +35,9 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public String Idcheck(MemberDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+	public int idcheck(MemberDto dto) {
+		int result = sqlSession.selectOne(NAMESPACE+"idcheck", dto);
+		return result;
 	}
 
 	@Override

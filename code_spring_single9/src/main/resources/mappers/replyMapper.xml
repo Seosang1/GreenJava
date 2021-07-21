@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+
+    PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ 
+
+<mapper namespace="kr.co.web.mappers.board.replyMapper">
+	<select id="getReplyList"
+		resultType="kr.co.web.model.board.BoardDto">
+		SELECT *
+		FROM
+		atworks_reply
+		WHERE
+		seq = #{seq}
+		ORDER BY create_date desc
+	</select>
+	
+	<insert id="saveReply" parameterType="kr.co.web.model.board.BoardDto">
+		INSERT INTO atworks_reply(seq, reply_contents, u_id, create_date)
+		VALUES (#{seq} , #{reply_contents} , #{u_id} , now())
+	</insert>
+                          
+	<update id="updateReply" parameterType="kr.co.web.model.board.BoardDto">
+		UPDATE atworks_reply SET reply_contents = #{reply_contents}, update_date = now()
+		WHERE rid = #{rid}  
+	</update>
+
+	<delete id="deleteReply" parameterType="int">
+		DELETE FROM atworks_reply
+		WHERE
+		rid = #{rid}  
+	</delete>
+
+</mapper>

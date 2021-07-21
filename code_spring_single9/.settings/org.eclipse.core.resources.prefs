@@ -1,3 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/main/java/kr/co/web/IndexController.java=UTF-8
+encoding//src/main/java/kr/co/web/RefreshableSqlSessionFactoryBean.java=UTF-8
+encoding//src/main/java/kr/co/web/model/Member/MemberBiz.java=UTF-8
+encoding//src/main/java/kr/co/web/model/Member/MemberDao.java=UTF-8
 encoding//src/main/java/kr/co/web/test/test.java=UTF-8

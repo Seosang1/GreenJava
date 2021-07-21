@@ -5,32 +5,7 @@
 <%@ include file="/WEB-INF/views/jsp/main/header.jsp" %>
 
 <head>
-<script>
-function init(){
-	$('#u_pwd').keydown(e => {
-		if (e.keyCode == 13) {
-	        login();
-	    }
-	});
-}
 
-function login() {
-	$.ajax({
-		url : "<%=request.getContextPath() %>/member/check_login",
-		type : "POST",
-		data : { u_id : $("#u_id").val(), u_pwd : $("#u_pwd").val() },
-		success : function(result) {
-			if (result == 1) {
-				loginForm.submit();
-			} else {
-				alert("아이디 또는 비밀번호가 일치하지 않습니다");
-				console.log("3");
-			}
-		},
-	})
-};
-$(init);
-</script>
 
  <c:choose>
  	<c:when test="${sessionScope.loginErr != null}">
@@ -48,7 +23,7 @@ $(init);
 	</div>
 	<div class='col-sm-9'>
 		<h2 class="login_title">로그인</h2>
-	<form name="loginForm" method="post" action="member/login_ok">
+	<form name="loginForm" method="post" action="/member/userlogin">
 			<div class="mb-3 row">
 				<label for="u_id" class="col-sm-2 col-form-label">아이디</label>
 				<div class="col-sm-5">
@@ -62,7 +37,7 @@ $(init);
 					<input type="password" class="form-control" id="u_pwd" name="u_pwd"
 						placeholder="비밀번호를 입력하세요">
 				</div>
-				<input type="button" value="로그인" class="input_button" onclick="login()" />
+				<input type="submit" value="로그인" class="input_button"  />
 			</div>
 			<div class='mb-3 row'>
 				<div id="login_menu">

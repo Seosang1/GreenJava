@@ -6,5 +6,8 @@ public interface productBiz {
 	
 	public List<productDto> selectList();
 
+	public productDto productDetail(int seq);
+
+	public void insertForm(productDto dto) throws Exception;
 
 }

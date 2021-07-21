@@ -31,4 +31,23 @@ public class productDaoImpl implements productDao {
 		return list;
 		
 }
+
+	@Override
+	public productDto productDetail(int seq) {
+		
+		productDto res = null;		
+		try {
+			res = sqlSession.selectOne(NAMESPACE+"productDetail",seq);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+
+	@Override
+	public void insertForm(productDto dto) throws Exception {
+		sqlSession.insert(NAMESPACE+"insertForm", dto);
+		
+	}
 }

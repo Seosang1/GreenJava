@@ -134,7 +134,7 @@
         
         	<ul class="menu_shop">
         		<li><a href="/admin/productList">상품리스트</a></li>
-        		<li><a href="/admin/product_reg">상품등록</a></li>
+        		<li><a href="../productReg.do">상품등록</a></li>
           	</ul>
         </li>
         

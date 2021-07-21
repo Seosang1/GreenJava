@@ -1,0 +1,16 @@
+
+<%
+session.setAttribute("u_id", "admin"); 
+session.setAttribute("u_pwd", "1234"); 
+session.setAttribute("u_code", "A");
+// 세션 유지시간 설정(초단위) // 60 * 30 = 30분 
+session.setMaxInactiveInterval(30*60); // 세션 시간을 무한대로 설정 
+session.setMaxInactiveInterval(-1); // 세션에 저장된 값 가져오기 
+session.getAttribute("u_id");
+session.getAttribute("u_pwd");
+session.getAttribute("u_code");
+
+String u_id = (String)session.getAttribute("u_id");
+String u_code = (String)session.getAttribute("u_code");
+// System.out.println(u_id + u_pwd + u_code);
+%>

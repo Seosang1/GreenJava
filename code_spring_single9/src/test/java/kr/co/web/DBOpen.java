@@ -8,20 +8,20 @@ import org.junit.Test;
 public class DBOpen {
 
 	private static final String DRIVER = "org.mariadb.jdbc.Driver";
-	private static final String URL = "jdbc:mariadb://127.0.0.1:3306/shopingmall?useUnicode=true&characterEncoding=euck";
+	private static final String URL = "jdbc:mariadb://192.168.0.7:3306/shopingmall?useUnicode=true&characterEncoding=euck";
 	private static final String USER = "root"; //db 접속 id
-	private static final String PW = "ssw824"; //db 접속 password
+	private static final String PW = "wongi0595"; //db 접속 password
 
 	@Test
 	public void testConnection() throws Exception{
 		Class.forName(DRIVER);
 		try(
-			Connection con = DriverManager.getConnection(URL, USER, PW)){
-			System.out.println(con +"디비연결성공");
+				Connection con = DriverManager.getConnection(URL, USER, PW)){
+			System.out.println(con +"success");
 
 		}catch(Exception e){
 			System.out.println("연결실패" + e);
 			e.printStackTrace();
 		}
 	}
-} 
+}

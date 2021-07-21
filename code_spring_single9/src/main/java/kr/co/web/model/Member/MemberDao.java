@@ -4,40 +4,40 @@ import javax.servlet.http.HttpSession;
 
 public interface MemberDao {
 	
-	String NAMESPACE = "member";
+	String NAMESPACE = "member.";
 	
-	//회원
-	//로그인
-	public MemberDto login(MemberDto dto);
+	//����
+	//濡�洹몄��
+	public MemberDto userlogin(MemberDto dto);
 	
-	//회원가입
+	//����媛���
 	public int memberjoin(MemberDto dto);
 	
-	//회원가입 아이디 중복체크
-	public String Idcheck(MemberDto dto);
+	//아이디 체크
+	public int idcheck(MemberDto dto);
 	
-	//회원가입 비밀번호 확인
+	//����媛��� 鍮�諛�踰��� ����
 	public void PWcheck(MemberDto dto); 
 	
-	//회원가입 이메일&핸드폰 인증
+	//����媛��� �대���&�몃���� �몄�
 	
-	//아이디 찾기
+	//���대�� 李얘린
 	public String searchId();
 	
-	//비밀번호 찾기
+	//鍮�諛�踰��� 李얘린
 	public void searchPw();
 	
-	//로그아웃
+	//濡�洹몄����
 	public void logout(HttpSession session);
 	
-	//관리자
-	//회원 정보 조회
+	//愿�由ъ��
+	//���� ��蹂� 議고��
 	public String loginCheck(MemberDto dto);
 	
-	//회원 등급 조정
+	//���� �깃� 議곗��
 	public String level(MemberDto dto);
 	
-	//회원 강제 탈퇴
+	//���� 媛��� ����
 	public String forced_Admin(String u_id, String u_pwd);
 
 }

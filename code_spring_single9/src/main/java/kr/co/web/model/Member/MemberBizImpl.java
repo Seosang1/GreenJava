@@ -12,8 +12,8 @@ public class MemberBizImpl implements MemberBiz {
 	private MemberDao dao;
 
 	@Override
-	public MemberDto login(MemberDto dto) {
-		return dao.login(dto);
+	public MemberDto userlogin(MemberDto dto) throws Exception {
+		return dao.userlogin(dto);
 	}
 
 	@Override
@@ -22,8 +22,8 @@ public class MemberBizImpl implements MemberBiz {
 	}
 
 	@Override
-	public String Idcheck(MemberDto dto) {
-		return null;
+	public int idcheck(MemberDto dto) throws Exception  {
+		return dao.idcheck(dto);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class MemberBizImpl implements MemberBiz {
 
 	@Override
 	public void logout(HttpSession session) {
-		
+		session.invalidate();
 	}
 
 	@Override

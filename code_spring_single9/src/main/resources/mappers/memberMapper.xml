@@ -4,16 +4,18 @@
 <mapper namespace="member">
 
 	<!-- 로그인 -->
-	<select id="login"  resultType="kr.co.web.model.Member.MemberDto">
-		SELECT *
+	<select id="userlogin"  resultType="kr.co.web.model.Member.MemberDto">
+		SELECT 
+		u_code
 		FROM atworks_user
-		WHERE u_id=#{u_id}
+ 		WHERE u_id = #{u_id}
+	 	AND u_pwd = #{u_pwd}
 	</select>
 	
 	<!-- 로그아웃 -->
 	
 	<!-- 회원가입 -->
-	<insert id="signup">
+	<insert id="signup" >
 		insert into atworks_user(u_id, u_pwd, u_name, u_tel, u_birth, u_wedding, u_p_birth, u_email,
 		u_address, u_start_date, u_code)
 		values(
@@ -22,7 +24,13 @@
 		#{u_p_birth}, #{u_email}, #{u_address},
 		#{u_start_date}, 'c')
 	</insert>
-	
+
+	<!-- 아이디 중복 체크 -->	
+	<select id="idcheck" resultType="kr.co.web.model.Member.MemberDto">
+		SELECT COUNT(*)
+		FROM atworks_user
+		WHERE u_id = #{u_id}
+	</select>
 	
 	<!-- 이메일 인증 -->
 	

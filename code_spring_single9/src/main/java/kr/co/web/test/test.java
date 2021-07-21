@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class test {
    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-      String url = "jdbc:mariadb://127.0.0.1:3306/test";
+      String url = "jdbc:mariadb://127.0.0.1:3306/shopingmall";
       String sql = "SELECT * FROM testTable";
 
                 // �대���ㅻ�� 媛�泥댄��, ���쇱�대�瑜� 濡���

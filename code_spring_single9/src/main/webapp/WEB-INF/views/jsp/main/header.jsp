@@ -151,7 +151,7 @@
         <li><a href="../board/qnaList">BOARD</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right col-sm-4">
-       	<c:if test="${sessionScope.u_code eq 'A'}">
+       	<c:if test="${sessionScope.user.u_code eq 'A'}">
         <li><a href="/admin/operator_main"><i class="far fa-user">관리자 모드</i></a></li>
         </c:if>
        <c:choose>

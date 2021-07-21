@@ -188,6 +188,51 @@ html, body {
 }
 </style>
 
+<script type="text/javascript">
+	var isEnd = false;
+	var startNumber = 4;
+	var endNumber = 6;
+	
+	
+
+	
+	$(function(){
+	    $(window).scroll(function(){
+	        
+	    	//스크롤 바닥에 도달하면 실행
+	        //if( $(window).scrollTop() == $(document).height() - $(window).height() ){
+	        if( $(window).scrollTop()+$(window).height()+30 > $(document).height() ){
+	            fetchList();
+	            startNumber += 3;
+	            endNumber += 3;
+	        }
+	    })
+	    
+	})
+	
+	var fetchList = function(){
+	    if(isEnd == true){
+	        return;
+	    }
+	    
+	    $.ajax({
+	        url: "productListScroll.do",
+	        type: "GET",
+	        data : {'startNumber' : startNumber, 
+	        		'endNumber' : endNumber}, 
+	        success: function(result){
+	        	
+	        	scrollPrint(result);
+	        	
+	        }
+	    });
+	}
+	
+	</script>
+
+
+
+
 <div class="container-fluid bg-3 text-center">
    <!-- <%@ include file="/WEB-INF/views/jsp/main/ad_gnb.jsp"%> -->
 
@@ -212,15 +257,17 @@ html, body {
    </div>
    <div class="list con">
       <ul class="row">
-         <c:forEach var="i" items="${list}" varStatus="status">
+         <c:forEach var="dto" items="${list}" varStatus="status">
             <!-- list is modelName that made in AdminController -->
             <li class="cell">
                <div class="img-box">
-                  <img src="/images/${ i.photo }" width="225" height="180"
-                     onclick="location.href='detail?seq=${ i.seq }'">
+                  <img src="/images/product/${ dto.title_photo }" width="225" height="180"
+                     onclick="location.href='productDetail?seq=${ dto.seq }'">
                </div>
-               <div class="product-name">${ i.title }</div>
-               <div class="product-price">${ i.price }</div>
+               <div class="product-name" onclick="location.href='productDetail?seq=${ dto.seq }'">${ dto.title }</div>
+               <div class="product-price">${ dto.price }</div>
+               <div class="product-viewCount">view : ${dto.view_count }</div>
+               <div class="product-viewCount">like : ${dto.likecnt }</div>               
             </li>
          </c:forEach>
       </ul>
@@ -228,6 +275,10 @@ html, body {
 </div>
 <br>
 <br>
+
+
+
+
 
 <!-- 관리자페이지 푸터 삭제 -->
 </body>

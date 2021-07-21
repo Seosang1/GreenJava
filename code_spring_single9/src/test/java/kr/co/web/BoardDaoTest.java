@@ -3,7 +3,6 @@ package kr.co.web;
 import javax.inject.Inject;
 
 import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +40,9 @@ public class BoardDaoTest {
 		}
 	}
 	 */
+
+
+
 	@Ignore
 	public void testInsertBoard() throws Exception {
 
@@ -61,6 +63,21 @@ public class BoardDaoTest {
 			logger.info("\n fail");
 		}
 	}
+	/*
+	@Test
+	public void testModify() {
+		BoardDto vo = new BoardDto();
+		BoardBiz biz = new BoardBiz();
+
+		vo.setSeq(100);
+		vo.setTitle("수정 제목");
+		vo.setContents("수정 내용");
+
+		int result = BoardBiz.updateQna(vo);
+		log.info("result : " + result);
+
+	}
+	 */
 
 	@Ignore
 	public void insert() throws Exception {
@@ -107,7 +124,7 @@ public class BoardDaoTest {
 		}
 	}
 
-	@Test
+	@Ignore
 	public void testUpdateBoard() throws Exception {
 
 		BoardDto vo = new BoardDto();

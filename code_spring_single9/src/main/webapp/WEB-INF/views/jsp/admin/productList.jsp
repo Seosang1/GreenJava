@@ -212,10 +212,10 @@ html, body {
 	</div>
 	<div class="list con">
 		<ul class="row">
-			<c:forEach var="i" items="${list}" varStatus="status"> <!-- list is modelName that made in AdminController -->
+			<c:forEach var="dto" items="${list}" varStatus="status"> <!-- list is modelName that made in AdminController -->
 				<li class="cell">
 					<div class="img-box">
-						<img src="/images/${ dto.photo }" width="225" height="180" onclick="location.href='detail?seq=${ i.seq }'">
+						<img src="/images/product/ ${ dto.title_photo }" width="225" height="180" onclick="location.href='detail?seq=${ dto.seq }'">
 					</div>
 					<div class="product-name">${ dto.title }</div>
 					<div class="product-price">${ dto.price }</div>

@@ -27,9 +27,10 @@ $(init);
   <div class="row content">
     <div class="col-sm-2 text-left"> 
     </div>
+    
     <div class="col-sm-10 text-left"> 
     
-  	<form  method="POST" action="/admin/regist" id="product_register_form"  enctype="multipart/form-data" >
+  	<form  method="POST" action="/main/regist" id="product_register_form"  enctype="multipart/form-data" >
 			<div class="mb-4 row">
 			<label for="subject" class="col-sm-2 col-form-label">상품 카테고리</label>
 			<div class="col-sm-5">	

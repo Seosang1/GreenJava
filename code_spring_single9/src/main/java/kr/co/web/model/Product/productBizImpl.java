@@ -17,5 +17,17 @@ public class productBizImpl implements productBiz{
 		
 		
 	}
+
+	@Override
+	public productDto productDetail(int seq) {
+		return dao.productDetail(seq);
+	}
+
+	@Override
+	public void insertForm(productDto dto) throws Exception {
+		dao.insertForm(dto);		
+	}
+
+	
 	
 }
